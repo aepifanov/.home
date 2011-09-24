@@ -1,0 +1,20 @@
+
+caption always "%{= kr} $USER%{= kc}@%H | %{= gk} %-Lw%{= Bw}%50>%n%f* %t%{-}%+Lw%<"
+
+log on
+scrollback 30000
+
+
+
+bindkey ^[[1;5D prev
+bindkey ^[[1;5C next
+
+startup_message off
+
+defutf8 on
+
+autodetach on
+
+shell /bin/bash
+
+termcapinfo xterm* ti@:te@
