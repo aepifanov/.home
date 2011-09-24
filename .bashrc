@@ -1,130 +1,130 @@
-# base-files version 3.9-3
+#!/bin/bash 
 
-# To pick up the latest recommended .bashrc content,
-# look in /etc/defaults/etc/skel/.bashrc
+export ACME_USE_SSH
 
-# Modifying /etc/skel/.bashrc directly will prevent
-# setup from updating it.
+export WS=/ws/aepifano-sjc
+export HOME=/users/aepifano
+export PATH=$PATH:/usr/cisco/bin
+export PATH_INIT=$PATH
+export LD_LIBRARY_PATH=$HOME/lib:$HOME/local/lib:$HOME/local/lib/expect5.45
 
-# The copy in your home directory (~/.bashrc) is yours, please
-# feel free to customise it to create a shell
-# environment to your liking.  If you feel a change
-# would be benificial to all, please feel free to send
-# a patch to the cygwin mailing list.
+########################
+#
+# Export CScope DataBase for given branch
+#
+########################
+function export_cscope()
+{
+    for build in $(ls -dt $1/*); do
+        if [ -r "$build/cscope.out" ]; then
+            export CSCOPE_DB="$build/cscope.out"
+            echo $CSCOPE_DB
+            break
+        fi
+    done
+}
 
-# User dependent .bashrc file
+########################
+#
+# Export my parths
+#
+########################
+function export_path()
+{
+    export PATH=$HOME/local/bin:$PATH
+}
 
-# Environment Variables
-# #####################
+export_path
 
-# TMP and TEMP are defined in the Windows environment.  Leaving
-# them set to the default Windows temporary directory can have
-# unexpected consequences.
-unset TMP
-unset TEMP
+########################
+#
+# Run static analysis for given module
+#
+########################
+function sa () 
+{
+    local bugid=$1
+    shift
 
-# Alternatively, set them to the Cygwin temporary directory
-# or to any other tmp directory of your choice
-# export TMP=/tmp
-# export TEMP=/tmp
+    local modules=
+    for module in "$@"; do
+        modules="$modules mipsbe/final/$module/sb-itasca"
+    done
 
-# Or use TMPDIR instead
-# export TMPDIR=/tmp
+    rm -rf $modules
 
-# Shell Options
-# #############
-
-# See man bash for more options...
-
-# Don't wait for job termination notification
-# set -o notify
-
-# Don't use ^D to exit
-# set -o ignoreeof
-
-# Use case-insensitive filename globbing
-# shopt -s nocaseglob
-
-# Make bash append rather than overwrite the history on disk
-# shopt -s histappend
-
-# When changing directory small typos can be ignored by bash
-# for example, cd /vr/lgo/apaache would find /var/log/apache
-# shopt -s cdspell
-
-
-# Completion options
-# ##################
-
-# These completion tuning parameters change the default behavior of bash_completion:
-
-# Define to access remotely checked-out files over passwordless ssh for CVS
-# COMP_CVS_REMOTE=1
-
-# Define to avoid stripping description in --option=description of './configure --help'
-# COMP_CONFIGURE_HINTS=1
-
-# Define to avoid flattening internal contents of tar files
-# COMP_TAR_INTERNAL_PATHS=1
-
-# If this shell is interactive, turn on programmable completion enhancements.
-# Any completions you add in ~/.bash_completion are sourced last.
-# case $- in
-#   *i*) [[ -f /etc/bash_completion ]] && . /etc/bash_completion ;;
-# esac
+    /auto/ses/bin/static_adbu -j1 \
+        $modules \
+        -compare_baseline \
+        -baseline /auto/itasca/static_analysis/converge_dev_sa.log \
+        -bugid $bugid
+}
 
 
-# History Options
-# ###############
-
-# Don't put duplicate lines in the history.
-# export HISTCONTROL="ignoredups"
-
-# Ignore some controlling instructions
-# HISTIGNORE is a colon-delimited list of patterns which should be excluded.
-# The '&' is a special pattern which suppresses duplicate entries.
-# export HISTIGNORE=$'[ \t]*:&:[fb]g:exit'
-# export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:ls' # Ignore the ls command as well
-
-# Whenever displaying the prompt, write the previous line to disk
-# export PROMPT_COMMAND="history -a"
-
-
-# Aliases
-# #######
-
-# Some example alias instructions
-# If these are enabled they will be used instead of any instructions
-# they may mask.  For example, alias rm='rm -i' will mask the rm
-# application.  To override the alias instruction use a \ before, ie
-# \rm will call the real rm not the alias.
-
-# Interactive operation...
-# alias rm='rm -i'
-# alias cp='cp -i'
-# alias mv='mv -i'
-
-# Default to human readable figures
-# alias df='df -h'
-# alias du='du -h'
-
-# Misc :)
-# alias less='less -r'                          # raw control characters
-# alias whence='type -a'                        # where, of a sort
-# alias grep='grep --color'                     # show differences in colour
-
-# Some shortcuts for different directory listings
-# alias ls='ls -hF --color=tty'                 # classify files in colour
-# alias dir='ls --color=auto --format=vertical'
-# alias vdir='ls --color=auto --format=long'
-# alias ll='ls -l'                              # long list
-# alias la='ls -A'                              # all but . and ..
-# alias l='ls -CF'                              #
+BLACK='0;0'
+DBLACK='1;0'
+RED='1;31'
+DRED='0;31'
+GREEN='1;32'
+DGREEN='0;32'
+YELLOW="1;33"
+DYELLOW="0;33"
+BLUE="1;34"
+DBLUE="0;34"
+MAGENTA="1;35"
+DMAGENTA="0;35"
+CYAN="1;36"
+DCYAN="0;36"
+WHITE="1;37"
+DWHITE='0;37'
 
 
-# Functions
-# #########
+ESC_RED="\[\e["$RED"m\]"
+ESC_GREEN="\[\e["$GREEN"m\]"
+ESC_DGREEN="\[\e["$DGREEN"m\]"
+ESC_BLACK="\[\e["$BLACK"m\]"
 
-# Some example functions
-# function settitle() { echo -ne "\e]2;$@\a\e]1;$@\a"; }
+PS1="$ESC_DGREEN\w $ESC_GREEN# $ESC_BLACK"
 
+function set_ws ()
+{
+    local platf=$1
+    local path=$2
+
+    platform=$platf
+
+    PS1="$ESC_RED[$platf] $ESC_DGREEN\w $ESC_GREEN# $ESC_BLACK"
+
+    alias cdw="cd $WS/$path"
+}
+
+alias export_cs_fusion='   export_cscope /auto/itasca/build/nightly_rel_a42_sustaining'
+alias export_cs_baikal='   export_cscope /auto/itasca/build/nightly_baikal-rib'
+alias export_cs_earth='    export_cscope /auto/itasca/build/nightly_earth_dev'
+alias export_cs_airstrike='export_cscope /auto/itasca/build/nightly_airstrike_dev'
+
+alias fusion='   source  /auto/itasca/tools/env/converge_dev.bashrc && export_path && export_cs_fusion    && set_ws "fusion"    "42x"'
+alias baikal='   source  /auto/itasca/tools/etc/itasca.bashrc       && export_path && export_cs_baikal    && set_ws "baikal"    "23x"'
+alias earth='    source  /auto/itasca/tools/env/earth_dev.bashrc    && export_path && export_cs_earth     && set_ws "earth"     "51x"'
+alias airstrike='source  /auto/kdevired/airstrike_dev-x86_64.bashrc && export_path && export_cs_airstrike && set_ws "airstrike" "airstrike"'
+
+alias s='screen -aOUDRR -s /bin/bash'
+
+alias ls='ls --color=auto --human-readable'
+alias ll="ls -lh"
+alias la="ls -a"
+alias df="df -h"
+alias du="du --si --max-depth=1"
+alias e="vim"
+
+diff_options="-wubpB --unified=5"
+
+alias diff="diff $diff_options"
+
+alias cd..='cd ..'
+alias cdw='cd $WS'
+
+LS_COLORS="di=$BLUE:ln=$CYAN:pi=$YELLOW:so=$MAGENTA:do=$MAGENTA:bd=$YELLOW:cd=$YELLOW:or=$WHITE:mi=$WHITE:ex=$GREEN:*.tar=$MAGENTA:*.tgz=$MAGENTA:*.c=$CYAN:*.h=$CYAN:*.mk=$RED:*.m?=$RED:*.diff=$YELLOW:*.patch=$YELLOW:"
+#LS_COLORS='di=$BLUE:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.tar=01;35:*.tgz=01;35:*.c=01;36:*.h=01;36:*.mk=01;31:*.m?=01;31:*.diff=01;33:*.patch=01;33:'
+
+export ACME_DIFF_OPTS=$diff_options
