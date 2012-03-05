@@ -17,6 +17,7 @@ let colors_name = "andrey"
 hi Normal       ctermbg=DarkGrey    ctermfg=White
 hi ErrorMsg     ctermbg=DarkRed     ctermfg=White
 hi Visual       ctermbg=Black       
+hi Cursor       ctermbg=Black       ctermfg=Black
 hi DiffText     ctermbg=Red         
 hi Directory                        ctermfg=Blue     
 hi LineNr       ctermbg=Blue        ctermfg=White

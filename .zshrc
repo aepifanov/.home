@@ -1,18 +1,7 @@
 #!/bin/zsh
 
-########################################################################## DEFINES
-#export LESS_TERMCAP_mb=$'\E[01;31m'       # начало мерцающего стиля
-#export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # начало полужирного стиля
-#export LESS_TERMCAP_me=$'\E[0m'           # окончание мерцающего или
-#export LESS_TERMCAP_so=$'\E[38;5;246m'    # начало служебной информации
-#export LESS_TERMCAP_se=$'\E[0m'           # окончание служебной
-#export LESS_TERMCAP_us=$'\E[04;38;5;146m' # начало подчеркивания
-#export LESS_TERMCAP_ue=$'\E[0m'           # окончание подчеркивания
-
 ########################################################################## LIMIT
 unlimit
-#limit stack 8192
-#limit core 0
 limit -s
 umask 022
 ########################################################################## FEATURES
@@ -37,27 +26,22 @@ compinit
 
 ########################################################################## ENVIRONMENTS
 BLOCKSIZE=k
-#TERM=xterm-color
 TZ=Europe/Moscow
-#WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 HISTFILE=~/.zhistory
 HISTSIZE=1024
 SAVEHIST=1024
-#SPROMPT='correct '%R' to '%r' ? ([Y]es/[N]o/[E]dit/[A]bort) '
-#PROMPT=$(echo '%{\033[32;22m%}[%n@%m] %2d %{\033[32;1m%}%B#%} %{\033[32m%}%b')
 PROMPT=$(echo '%{\033[32;22m%}%2d %{\033[32;1m%}%B#%} %{\033[32m%}%b')
 RPROMPT=$(echo '%{\033[32;1m%}%T%{\033[0m%}')
 hosts=( ${(s: :)${(ps:\t:)${${(f)"$(</etc/hosts)"}%%\#*}##[:blank:]#[^[:blank:]]#}} )
-#compile=(check clean cleandir depend install obj)
 
 
 ########################################################################## ALIAS
 alias exit='sync; sync; exit'
 
 
-alias cp='nocorrect cp --interactive --verbose --recursive --preserve=all'
-alias mv='nocorrect mv --verbose --interactive'
-alias rm='nocorrect rm -Irv'
+alias cp='nocorrect cp --verbose --recursive --preserve=all'
+alias mv='nocorrect mv --verbose '
+alias rm='nocorrect rm -rv'
 
 alias grep='grep --color=auto'
 
@@ -75,20 +59,7 @@ alias cd~='cd ~'
 
 alias ps="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
-alias -g L='| less'
-alias -g G='| grep'
-alias -g GI='|grep -i'
-alias -g H='| head'
-alias -g T='| tail'
-alias -g S='| sort'
-alias -g SU='|sort -u'
-alias -g P='| patch -p1'
-alias -g PD='| patch -p1 --dry-run'
-alias -g WC='| wc -l'
-alias -g cdw='cd /cygdrive/f/andrey/code/'
-
-alias kite='xe-kite.cisco.com'
-alias mcarlo='xe-montecarlo.cisco.com'
+alias -g cdw='cd /cygdrive/d/code/cisco'
 
 ########################################################################## FUNCTIONS
 extract () {

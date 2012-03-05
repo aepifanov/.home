@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/cygdrive/d'
-let g:netrw_dirhist_2='/cygdrive/d/code'
-let g:netrw_dirhist_3='/cygdrive/d/code/code'
-let g:netrw_dirhist_4='/cygdrive/d/code'
-let g:netrw_dirhist_5='/cygdrive/d/code/test'
-let g:netrw_dirhist_6='/cygdrive/d/tmp/_log/1_logs'
