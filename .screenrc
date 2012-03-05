@@ -1,5 +1,7 @@
 
 caption always "%{= kr} $USER%{= kc}@%H | %{= gk} %-Lw%{= Bw}%50>%n%f* %t%{-}%+Lw%<"
+#hardstatus alwayslastline
+#hardstatus string "%{= kG}[ %{G}%H %{g}][%= %{= kw}%-Lw%{r}%n%f %t%?(%u)%?%{w}%+Lw%= %{g}]"
 
 log on
 scrollback 30000
@@ -18,3 +20,7 @@ autodetach on
 shell /bin/bash
 
 termcapinfo xterm* ti@:te@
+
+vbell off
+altscreen on
+

@@ -55,6 +55,8 @@ set laststatus=2                  " Show the status line all the time
 " Useful status information at bottom of screen
 set statusline=[%n]\ %<%.99f\ %h%w%m%r%y\ %{exists('*CapsLockStatusline')?CapsLockStatusline():''}%=%-16(\ %l,%c-%v\ %)%P
 
+cabbr <expr> %% substitute(expand('%:p:h'), getcwd() . '/', '', '')
+
 let g:ctags_regenerate=0 
 let Tlist_Ctags_Cmd='"ctags"' 
 
@@ -79,8 +81,8 @@ map  <F4>            :cs f c <c-r>=expand("<cword>")<cr><cr>
 imap <F4>       <esc>:cs f c <c-r>=expand("<cword>")<cr><cr>
 
 "    list buffers
-map  <F5>            :ls<cr>
-imap <F5>       <esc>:ls<cr>
+map  <F5>            :BufExplorer<cr>
+imap <F5>       <esc>:BufExplorer<cr>
 
 "    next buffer
 map  <F6>            :bn<cr>

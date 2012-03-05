@@ -316,7 +316,7 @@ else
 endif
 
 
-syn keyword cCLibFunc      malloc calloc free printf fprintf sprinf snprintf vsnprintf scanf fscanf memcpy memcmp memset open fopen close fclose fsync fflush send recv write read strlcpy strncpy strlen ntohl htonl sleep exit signal fork exec system va_start va_end strerror
+syn keyword cCLibFunc      malloc calloc free printk printf fprintf sprinf snprintf vsnprintf scanf fscanf memcpy memcmp memset open fopen close fclose fsync fflush send recv write read strlcpy strncpy strlen ntohl htonl sleep exit signal fork exec system va_start va_end strerror
 syn keyword cCLibFuncFail  sprinf strcpy goto errno 
 
 " Define the default highlighting.
