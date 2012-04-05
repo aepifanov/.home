@@ -8,8 +8,10 @@ if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
 
-colorscheme andrey
+
 syntax      enable
+colorscheme andrey_white
+
 filetype    plugin indent on
 
 "set encoding=utf-8
@@ -146,7 +148,7 @@ if has("autocmd")
 
 else
 
-  set autoindent		" always set autoindenting on
+  set autoindent        " always set autoindenting on
 
 endif " has("autocmd")
 
