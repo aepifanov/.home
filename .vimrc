@@ -10,7 +10,7 @@ endif
 
 
 syntax      enable
-colorscheme andrey_white
+colorscheme andrey_black
 
 filetype    plugin indent on
 

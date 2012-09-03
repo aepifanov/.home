@@ -71,12 +71,12 @@ autoload -U colors && colors
 LS_COLORS="fi=$BLACK:di=$BLUE:ln=$CYAN:pi=$YELLOW:so=$MAGENTA:do=$MAGENTA:bd=$YELLOW:cd=$YELLOW:or=$WHITE:mi=$WHITE:ex=$GREEN:*.tar=$MAGENTA:*.tgz=$MAGENTA:*.tar.bz2=$MAGENTA:*.tar.gz=$MAGENTA:*.c=$CYAN:*.h=$CYAN:*.mk=$RED:*.m?=$RED:*.diff=$YELLOW:*.patch=$YELLOW:"
 
 ##### green
-#PROMPT=%{$fg[green]%}%2d%{$fg_bold[green]%} #"
-#RPROMPT="%{$fg_bold[green]%}%T%{$reset_color%}"
+PROMPT="%{$fg[green]%}%2d%{$fg_bold[green]%} # "
+RPROMPT="%{$fg_bold[green]%}%T%{$reset_color%}"
 
 ##### black
-PROMPT="%{$fg[black]%}%2d%{$fg[green]%} # "
-RPROMPT="%{$fg[green]%}%T%{$fg[black]%}"
+#PROMPT="%{$fg[black]%}%2d%{$fg[green]%} # "
+#RPROMPT="%{$fg[green]%}%T%{$fg[black]%}"
 
 
 ########################################################################## ALIAS
@@ -101,8 +101,8 @@ alias df=" df -h"
 alias cd..='cd ..'
 alias cd~='cd ~'
 
-alias ps="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
+alias ps="ps -e user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
-alias -g cdw='cd /cygdrive/d/code/cisco'
+alias -g cdw='cd /cygdrive/d/Dropbox/code/python'
 alias -g cdh='cd /cygdrive/c/Users/aepifano/home/code/cisco'
 
