@@ -106,3 +106,5 @@ alias ps="ps -e user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 alias -g cdw='cd /cygdrive/d/Dropbox/code/python'
 alias -g cdh='cd /cygdrive/c/Users/aepifano/home/code/cisco'
 
+alias s='screen -aOUDRR -s /bin/zsh'
+

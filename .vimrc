@@ -51,6 +51,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 set laststatus=2                  " Show the status line all the time
+set nofoldenable
 
 
 
@@ -61,7 +62,28 @@ cabbr <expr> %% substitute(expand('%:p:h'), getcwd() . '/', '', '')
 
 let g:ctags_regenerate=0 
 let Tlist_Ctags_Cmd='"ctags"' 
+let python_highlight_all = 1
 
+" Load show documentation plugin
+let g:pymode_doc = 1
+" Key for show python documentation
+let g:pymode_doc_key = 'K'
+
+" Rope
+let ropevim_vim_completion=1
+let ropevim_extended_complete=1
+
+function! TabWrapperRope() 
+ if strpart(getline('.'), 0, col('.')-1) =~ '^\s*$' 
+   return "\<Tab>" 
+ else 
+   return "\<C-R>=RopeCodeAssistInsertMode()\<CR>\<down>\<up>" 
+ endif 
+endfunction 
+
+imap <Tab> <C-R>=TabWrapperRope()<CR>
+map <leader>j :RopeGotoDefinition<CR>
+map <leader>r :RopeRename<CR>
 
 "    set normal mode
 map  <C-l>           :noh<cr>
