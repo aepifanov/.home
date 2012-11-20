@@ -34,7 +34,7 @@ set hlsearch                      " Highlight matches.
 set nowrap                        " Turn on line wrapping.
 set scrolloff=3                   " Show 3 lines of context around the cursor.
 set title                         " Set the terminal's title
-set visualbell                    " No beeping.
+set novisualbell                  " No beeping.
 set autoread                      " auto reread file 
 set hidden
 set completeopt=longest,menuone   " enable auto complete ?
@@ -84,6 +84,7 @@ endfunction
 imap <Tab> <C-R>=TabWrapperRope()<CR>
 map <leader>j :RopeGotoDefinition<CR>
 map <leader>r :RopeRename<CR>
+map <leader>d import IPython; IPython.embed()<CR>
 
 "    set normal mode
 map  <C-l>           :noh<cr>

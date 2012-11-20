@@ -17,7 +17,7 @@ defutf8 on
 
 autodetach on
 
-#shell /bin/bash
+#shell /bin/zsh
 
 termcapinfo xterm* ti@:te@
 

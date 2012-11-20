@@ -71,15 +71,18 @@ autoload -U colors && colors
 LS_COLORS="fi=$BLACK:di=$BLUE:ln=$CYAN:pi=$YELLOW:so=$MAGENTA:do=$MAGENTA:bd=$YELLOW:cd=$YELLOW:or=$WHITE:mi=$WHITE:ex=$GREEN:*.tar=$MAGENTA:*.tgz=$MAGENTA:*.tar.bz2=$MAGENTA:*.tar.gz=$MAGENTA:*.c=$CYAN:*.h=$CYAN:*.mk=$RED:*.m?=$RED:*.diff=$YELLOW:*.patch=$YELLOW:"
 
 ##### green
-PROMPT="%{$fg[green]%}%2d%{$fg_bold[green]%} # "
-RPROMPT="%{$fg_bold[green]%}%T%{$reset_color%}"
+#PROMPT="%{$fg[green]%}%2d%{$fg_bold[green]%} # "
+#RPROMPT="%{$fg_bold[green]%}%T%{$reset_color%}"
 
-##### black
-#PROMPT="%{$fg[black]%}%2d%{$fg[green]%} # "
-#RPROMPT="%{$fg[green]%}%T%{$fg[black]%}"
+##### cyan
+PROMPT="%{$fg[cyan]%}%2d%{$fg_bold[cayn]%} # "
+RPROMPT="%{$fg_bold[cyan]%}%T%{$reset_color%}"
+
 
 
 ########################################################################## ALIAS
+alias vi='vim'
+
 alias exit='sync; sync; exit'
 
 alias cp='nocorrect cp --verbose --recursive --preserve=all'
@@ -103,8 +106,7 @@ alias cd~='cd ~'
 
 alias ps="ps -e user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
-alias -g cdw='cd /cygdrive/d/Dropbox/code/python'
-alias -g cdh='cd /cygdrive/c/Users/aepifano/home/code/cisco'
+alias -g cdw='cd /cygdrive/d/Dropbox/code'
 
 alias s='screen -aOUDRR -s /bin/zsh'
 
