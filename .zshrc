@@ -110,3 +110,6 @@ alias -g cdw='cd /cygdrive/d/Dropbox/code'
 
 alias s='screen -aOUDRR -s /bin/zsh'
 
+alias push_cfg="git push git@github.com:aepifanov/config.git"
+alias pull_cfg="git pull git@github.com:aepifanov/config.git"
+
