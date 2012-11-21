@@ -104,7 +104,7 @@ alias df=" df -h"
 alias cd..='cd ..'
 alias cd~='cd ~'
 
-alias ps="ps -e user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
+alias ps="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
 alias -g cdw='cd /cygdrive/d/Dropbox/code'
 
