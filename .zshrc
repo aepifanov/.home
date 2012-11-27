@@ -1,5 +1,6 @@
-#!/bin/zsh
+#!/bin/zsh -x
 
+########################################################################## COLOURS
 BLACK='0;0'
 DBLACK='1;0'
 RED='1;31'
@@ -17,12 +18,10 @@ DCYAN="0;36"
 WHITE="1;37"
 DWHITE='0;37'
 
-########################################################################## LIMIT
-#unlimit
-#limit -s
-#umask 022
+autoload -U colors && colors
+LS_COLORS="fi=$BLACK:di=$BLUE:ln=$CYAN:pi=$YELLOW:so=$MAGENTA:do=$MAGENTA:bd=$YELLOW:cd=$YELLOW:or=$WHITE:mi=$WHITE:ex=$GREEN:*.tar=$MAGENTA:*.tgz=$MAGENTA:*.tar.bz2=$MAGENTA:*.tar.gz=$MAGENTA:*.c=$CYAN:*.h=$CYAN:*.mk=$RED:*.m?=$RED:*.diff=$YELLOW:*.patch=$YELLOW:"
 
-########################################################################## FEATURES
+########################################################################## COMPLETION
 #zstyle ':completion:*' completer _expand _complete _ignored
 #zstyle ':completion:*' group-name ''
 #zstyle ':completion:*' list-colors ''
@@ -42,42 +41,11 @@ DWHITE='0;37'
 #compinit
 
 ########################################################################## ENVIRONMENTS
-#BLOCKSIZE=k
-#TZ=Europe/Moscow
-#HISTFILE=~/.zhistory
-#HISTSIZE=1024
-#SAVEHIST=1024
-
-
-#  Current working directory                                   %/
-#  Current working directory, with one's home directory by     %~
-#  Full hostname                                               %M
-#  Hostname up to the first                                    %m
-#  Start (stop) boldfacing mode                                %B (or %b)
-#  Start (stop) standout mode                                  %S (or %s)
-#  Start (stop) underline mode                                 %U (or %u)
-#  User name                                                   %n
-#  The shell's tty that the user is logged in on               %|
-#  The current history number                                  %h (or %!)
-#  Time of day in 12-hour hh:mm                                %t (or %@)
-#  Time of day in 24-hour hh:mm                                %T
-#  Time of day in 24-hour with seconds hh:mm:nn                %*
-#  The date in day-dd format                                   %w
-#  The date in Mon/dd/yy format                                %W
-#  The date in yy-mm-dd format                                 %D
-
-
-autoload -U colors && colors
-LS_COLORS="fi=$BLACK:di=$BLUE:ln=$CYAN:pi=$YELLOW:so=$MAGENTA:do=$MAGENTA:bd=$YELLOW:cd=$YELLOW:or=$WHITE:mi=$WHITE:ex=$GREEN:*.tar=$MAGENTA:*.tgz=$MAGENTA:*.tar.bz2=$MAGENTA:*.tar.gz=$MAGENTA:*.c=$CYAN:*.h=$CYAN:*.mk=$RED:*.m?=$RED:*.diff=$YELLOW:*.patch=$YELLOW:"
-
-##### green
-#PROMPT="%{$fg[green]%}%2d%{$fg_bold[green]%} # "
-#RPROMPT="%{$fg_bold[green]%}%T%{$reset_color%}"
-
-##### cyan
-PROMPT="%{$fg[cyan]%}%2d%{$fg_bold[cayn]%} # "
-RPROMPT="%{$fg_bold[cyan]%}%T%{$reset_color%}"
-
+BLOCKSIZE=k
+TZ=Europe/Moscow
+HISTFILE=~/.zhistory
+HISTSIZE=1024
+SAVEHIST=1024
 
 
 ########################################################################## ALIAS
@@ -112,4 +80,65 @@ alias s='screen -aOUDRR -s /bin/zsh'
 
 alias push_cfg="git push git@github.com:aepifanov/config.git"
 alias pull_cfg="git pull git@github.com:aepifanov/config.git"
+
+
+########################################################################## PROMPT
+function set_prompt()
+{
+
+    #  Current working directory                                   %/
+    #  Current working directory, with one's home directory by     %~
+    #  Full hostname                                               %M
+    #  Hostname up to the first                                    %m
+    #  Start (stop) boldfacing mode                                %B (or %b)
+    #  Start (stop) standout mode                                  %S (or %s)
+    #  Start (stop) underline mode                                 %U (or %u)
+    #  User name                                                   %n
+    #  The shell's tty that the user is logged in on               %|
+    #  The current history number                                  %h (or %!)
+    #  Time of day in 12-hour hh:mm                                %t (or %@)
+    #  Time of day in 24-hour hh:mm                                %T
+    #  Time of day in 24-hour with seconds hh:mm:nn                %*
+    #  The date in day-dd format                                   %w
+    #  The date in Mon/dd/yy format                                %W
+    #  The date in yy-mm-dd format                                 %D
+
+    color="cyan"
+
+    if [[ $HOST == "srv" ]]; then
+        color="green"
+    fi
+
+    if [[ $USER == "root" ]]; then
+        color="red"
+    fi
+
+    if get_git_branch; then
+        PROMPT="%{$fg[red]%}[$branch]%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
+    else
+        PROMPT="%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
+    fi
+
+    RPROMPT="%{$fg_bold[$color]%}%T%{$reset_color%}"
+
+}
+
+function get_git_branch()
+{
+    str=`git branch 2>/dev/null`
+    if [ $? = 0 ] ; then
+        branch=`awk '{print $2}' <<<$str`
+        return 0
+    else
+        return 1
+    fi
+}
+
+
+function chpwd() 
+{
+    set_prompt
+}
+
+set_prompt
 
