@@ -1,3 +1,13 @@
 [user]
 	name = Andrey Epifanov
 	email = epifanov.andrey@gmail.com
+
+[help]
+    autocorrect = 1
+
+[color]
+    ui = true
+
+[core]
+    autocrlf = true
+    whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol

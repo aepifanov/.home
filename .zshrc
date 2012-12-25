@@ -72,14 +72,14 @@ alias df=" df -h"
 alias cd..='cd ..'
 alias cd~='cd ~'
 
-alias ps="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
+alias psa="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
-alias -g cdw='cd /cygdrive/d/Dropbox/code'
+alias -g cdw='cd ~/code'
 
 alias s='screen -aOUDRR -s /bin/zsh'
 
-alias push_cfg="git push git@github.com:aepifanov/config.git"
-alias pull_cfg="git pull git@github.com:aepifanov/config.git"
+alias cfg_push="git push git@github.com:aepifanov/config.git"
+alias cfg_pull="git pull git@github.com:aepifanov/config.git"
 
 
 ########################################################################## PROMPT
@@ -126,7 +126,7 @@ function set_prompt()
 function get_git_branch()
 {
     str=`git branch 2>/dev/null`
-    if [ $? = 0 ] ; then
+    if (( $? == 0 )) ; then
         branch=`awk '{print $2}' <<<$str`
         return 0
     else

@@ -8,15 +8,11 @@ if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
 
-
 syntax      enable
 colorscheme andrey_black
 
+filetype    on
 filetype    plugin indent on
-
-"set encoding=utf-8
-"set fileencoding=utf-8
-"set fileencodings=utf-8,cp1251
 
 set number                        " Enable line number
 set showcmd                       " Display incomplete commands.
@@ -64,28 +60,6 @@ let g:ctags_regenerate=0
 let Tlist_Ctags_Cmd='"ctags"' 
 let python_highlight_all = 1
 
-" Load show documentation plugin
-let g:pymode_doc = 1
-" Key for show python documentation
-let g:pymode_doc_key = 'K'
-
-" Rope
-let ropevim_vim_completion=1
-let ropevim_extended_complete=1
-
-function! TabWrapperRope() 
- if strpart(getline('.'), 0, col('.')-1) =~ '^\s*$' 
-   return "\<Tab>" 
- else 
-   return "\<C-R>=RopeCodeAssistInsertMode()\<CR>\<down>\<up>" 
- endif 
-endfunction 
-
-imap <Tab> <C-R>=TabWrapperRope()<CR>
-map <leader>j :RopeGotoDefinition<CR>
-map <leader>r :RopeRename<CR>
-map <leader>d import IPython; IPython.embed()<CR>
-
 "    set normal mode
 map  <C-l>           :noh<cr>
 
@@ -130,6 +104,7 @@ map  <F10>           :!ctags -x %<cr>
 imap  <F10>     <esc>:!ctags -x %<cr>
 "
 ""
+let g:pep8_map='<F11>'
 "map  <F11>
 "imap <F11>
 "
@@ -141,7 +116,9 @@ imap <F12>      <esc>:wa<cr>
 map  <C-j>           <C-e>
 map  <C-k>           <C-y>
 
-
+au FileType python set omnifunc=pythoncomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
+set completeopt=menuone,longest,preview
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Only do this part when compiled with support for autocommands.
