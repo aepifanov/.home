@@ -9,5 +9,5 @@
     ui = true
 
 [core]
-    autocrlf = true
+    autocrlf = input
     whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol
