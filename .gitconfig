@@ -1,6 +1,6 @@
 [user]
 	name = Andrey Epifanov
-	email = epifanov.andrey@gmail.com
+	email = aepifanov@mirantis.com
 
 [help]
     autocorrect = 1
@@ -11,3 +11,11 @@
 [core]
     autocrlf = input
     whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol
+
+[diff]
+    tool = vimdiff
+
+[alias]
+    st = status
+    rs = reset --hard
+    lg =  log --graph --decorate --pretty=oneline --abbrev-commit --all
