@@ -18,4 +18,7 @@
 [alias]
     st = status
     rs = reset --hard
-    lg =  log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lg = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    co = checkout
+    br = branch
+    df = diff

@@ -130,7 +130,7 @@ function get_git_branch()
 {
     str=`git branch 2>/dev/null`
     if (( $? == 0 )) ; then
-        branch=`awk '{print $2}' <<<$str`
+        branch=`awk '{if($1 == "*") {print $2}}' <<<$str`
         return 0
     else
         return 1
