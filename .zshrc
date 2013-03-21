@@ -84,6 +84,7 @@ alias cfg_pull="git pull git@github.com:aepifanov/config.git master"
 alias vim_push="git push git@github.com:aepifanov/.vim.git master"
 alias vim_pull="git pull git@github.com:aepifanov/.vim.git master"
 
+alias ipythonnotebook="ipython notebook --profile=nbserver"
 
 ########################################################################## PROMPT
 function set_prompt()
