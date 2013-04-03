@@ -107,7 +107,9 @@ function set_prompt()
     #  The date in Mon/dd/yy format                                %W
     #  The date in yy-mm-dd format                                 %D
 
-    color="cyan"
+    if [[ $HOST == "aepifanov" ]]; then
+        color="cyan"
+    fi
 
     if [[ $HOST == "srv" ]]; then
         color="green"
