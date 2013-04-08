@@ -50,5 +50,5 @@ vim_update:
 	@echo 
 	@echo " Update VIM files."
 	@echo 
-	cd $(HOME)/.vim && git pull $(GITHUB_REPO)/.vim.git master 
+	cd $(HOME)/.vim && git pull $(GITHUB_REPO)/.vim.git master && git submodule update
 
