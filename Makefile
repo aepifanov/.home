@@ -3,17 +3,42 @@
 
 GITHUB_REPO = git://github.com/aepifanov
 
+
 .PHONY: help
 help:
 	@egrep "^# target:" [Mm]akefile
 
+
+.PHONY: push
+# target: push        - Push    HOME configuration files update to repo.
+push:  
+	git push git@github.com:aepifanov/config.git master	
+
+
+.PHONY: update
+# target: update      - Update  HOME and VIM.
+update: vim_update home_update
+
+
+.PHONY: home_update
+# target: home_update - Update  HOME configuration files.
+home_update:
+	@echo 
+	@echo " Update HOME configuration files."
+	@echo 
+	cd $(HOME) && git pull $(GITHUB_REPO)/config.git master 
+
+
 VIM_TARGETS = $(HOME)/.vimrc $(HOME)/.vim
-# target: vim - Install my VIM files.
-.PHONY: vim
-vim: $(VIM_TARGETS)
+
+
+# target: vim_install - Install VIM files.
+.PHONY: vim_intall
+vim_install: $(VIM_TARGETS)
+
 
 .PHONY: vim_clean
-# target: vim_clean - Clean VIM files.
+# target: vim_clean   - Clean   VIM files.
 vim_clean:
 	@echo
 	@echo " Clean VIM files."
@@ -28,27 +53,13 @@ $(HOME)/.vim:
 	@echo
 	git clone --recursive $(GITHUB_REPO)/.vim.git
 
+
 $(HOME)/.vimrc: $(HOME)/.vim
-	ln -s $(HOME)/.vim/vimrc $@
-
-.PHONY: update
-# target: update - Update HOME and VIM.
-update: vim_update home_update
-
-.PHONY: home_update
-# target: home_update - Update HOME configuration files.
-home_update:
-	@echo 
-	@echo " Update HOME configuration files."
-	@echo 
-	cd $(HOME) && git pull $(GITHUB_REPO)/config.git master 
+	cd $(HOME)/.vim && make install
 
 
 .PHONY: vim_update
-# target: vim_update - Update VIM files.
+# target: vim_update  - Update  VIM files.
 vim_update:
-	@echo 
-	@echo " Update VIM files."
-	@echo 
-	cd $(HOME)/.vim && git pull $(GITHUB_REPO)/.vim.git master && git submodule update
+	cd $(HOME)/.vim && make update
 

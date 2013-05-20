@@ -78,12 +78,6 @@ alias -g cdw='cd ~/code'
 
 alias s='screen -aOUDRR -s /bin/zsh'
 
-alias cfg_push="git push git@github.com:aepifanov/config.git master"
-alias cfg_pull="git pull git@github.com:aepifanov/config.git master"
-
-alias vim_push="git push git@github.com:aepifanov/.vim.git master"
-alias vim_pull="git pull git@github.com:aepifanov/.vim.git master"
-
 alias ipythonnotebook="ipython notebook --profile=nbserver"
 
 ########################################################################## PROMPT
