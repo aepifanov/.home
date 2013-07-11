@@ -1,7 +1,9 @@
 
 # Makefile for the management of configuration files.
 
-GITHUB_REPO = git://github.com/aepifanov
+GITHUB_ANDREY = git://github.com/aepifanov
+HOME_REPO = $(GITHUB_ANDREY)/.home.git
+VIM_REPO = $(GITHUB_ANDREY)/.vim.git
 
 
 .PHONY: help
@@ -12,7 +14,7 @@ help:
 .PHONY: push
 # target: push        - Push    HOME configuration files update to repo.
 push:  
-	git push git@github.com:aepifanov/config.git master	
+	git push $(HOME_REPO) master	
 
 
 .PHONY: update
@@ -26,7 +28,7 @@ home_update:
 	@echo 
 	@echo " Update HOME configuration files."
 	@echo 
-	cd $(HOME) && git pull $(GITHUB_REPO)/config.git master 
+	cd $(HOME) && git pull $(HOME_REPO) master 
 
 
 VIM_TARGETS = $(HOME)/.vimrc $(HOME)/.vim
@@ -51,7 +53,7 @@ $(HOME)/.vim:
 	@echo
 	@echo " Install VIM files."
 	@echo
-	git clone --recursive $(GITHUB_REPO)/.vim.git
+	git clone --recursive $(VIM_REPO) $(HOME)/.vim
 
 
 $(HOME)/.vimrc: $(HOME)/.vim

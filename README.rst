@@ -4,11 +4,8 @@ Configuration files for the home directory
 
 Install
 -------
-    1. In HOME directory create GIT repositary:
-           git init
+    1. In HOME directory clone .HOME GIT repositary:
+           git clone git@github.com:aepifanov/.home.git
 
-    2. Pull conf files from GitHub:
-           git pull git@github.com:aepifanov/config.git 
-
-    3. Use make utility for the following configuration:
+    2. In .home directory to use make utility for the following configuration:
            make 
