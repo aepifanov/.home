@@ -6,8 +6,6 @@ caption always "%{= kr} $USER%{= kc}@%H | %{= gk} %-Lw%{= Bw}%50>%n%f* %t%{-}%+L
 log on
 scrollback 30000
 
-
-
 bindkey ^[[1;5D prev
 bindkey ^[[1;5C next
 

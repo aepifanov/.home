@@ -11,25 +11,47 @@ help:
 	@egrep "^# target:" [Mm]akefile
 
 
-.PHONY: push
-# target: push        - Push    HOME configuration files update to repo.
-push:  
-	git push $(HOME_REPO) master	
+.PHONY: install_all
+# target: install_all - Install HOME and VIM files.
+update: update vim_update 
 
+.PHONY: update_all
+# target: update_all  - Update  HOME and VIM files.
+update: update vim_update 
+
+.PHONY: install
+# target: install     - Install HOME configuration files
+install: ssh_install $(HOME)/.gitconfig $(HOME)/.zshrc $(HOME)/.screenrc
 
 .PHONY: update
-# target: update      - Update  HOME and VIM.
-update: vim_update home_update
-
-
-.PHONY: home_update
-# target: home_update - Update  HOME configuration files.
+# target: update      - Update  HOME configuration files.
 home_update:
 	@echo 
 	@echo " Update HOME configuration files."
 	@echo 
-	cd $(HOME) && git pull $(HOME_REPO) master 
+	git pull 
 
+.PHONY: ssh_install
+# target: ssh_install - Install SSH config and autorized files.
+ssh_install: $(HOME)/.ssh $(HOME)/.ssh/authorized_keys $(HOME)/.ssh/config
+
+$(HOME)/.ssh:
+	mkdir -p $(HOME)/.ssh
+
+$(HOME)/.ssh/authorized_keys:
+	ln -s $(CURDIR)/ssh/authorized_keys $@
+
+$(HOME)/.ssh/config:
+	ln -s $(CURDIR)/ssh/config $@
+
+$(HOME)/.gitconfig:
+	ln -s $(CURDIR)/gitconfig $@
+
+$(HOME)/.zshrc:
+	ln -s $(CURDIR)/zshrc $@
+
+$(HOME)/.screenrc:
+	ln -s $(CURDIR)/screenrc $@
 
 VIM_TARGETS = $(HOME)/.vimrc $(HOME)/.vim
 
@@ -63,5 +85,8 @@ $(HOME)/.vimrc: $(HOME)/.vim
 .PHONY: vim_update
 # target: vim_update  - Update  VIM files.
 vim_update:
+	@echo 
+	@echo " Update VIM files."
+	@echo 
 	cd $(HOME)/.vim && make update
 
