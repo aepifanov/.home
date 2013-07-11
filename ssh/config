@@ -1,22 +1,10 @@
 
 ServerAliveInterval 60
 
-Host aio
-    User root
-    HostName 172.18.67.124 
-    Port 22
-    IdentityFile ~/.ssh/id_rsa
-
-Host os
-    User user
-    HostName aepifanov.srt.mirantis.net
-    Port 9022
-    IdentityFile ~/.ssh/id_rsa
 
 Host srv
     User aepifanov
-    HostName aepifanov.srt.mirantis.net
-    Port 8022
+    HostName 172.18.65.146
     IdentityFile ~/.ssh/id_rsa
 
 Host github.com
