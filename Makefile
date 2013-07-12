@@ -2,8 +2,8 @@
 # Makefile for the management of configuration files.
 
 GITHUB_ANDREY = git://github.com/aepifanov
-HOME_REPO = $(GITHUB_ANDREY)/.home.git
-VIM_REPO = $(GITHUB_ANDREY)/.vim.git
+	HOME_REPO = $(GITHUB_ANDREY)/.home.git
+	VIM_REPO = $(GITHUB_ANDREY)/.vim.git
 
 
 .PHONY: help
@@ -11,32 +11,59 @@ help:
 	@egrep "^# target:" [Mm]akefile
 
 
-.PHONY: install_all
-# target: install_all - Install HOME and VIM files.
-update: update vim_update 
+.PHONY: all_install
+# target: all_install - Install ALL files.
+all_install: install vim_install
 
-.PHONY: update_all
-# target: update_all  - Update  HOME and VIM files.
-update: update vim_update 
+.PHONY: all_update
+# target: all_update  - Update  ALL files.
+all_update: update vim_update
+
+.PHONY: all_clean
+# target: all_clean   - Clean   ALL files.
+all_clean: clean vim_clean ssh_clean
 
 .PHONY: install
 # target: install     - Install HOME configuration files
-install: ssh_install $(HOME)/.gitconfig $(HOME)/.zshrc $(HOME)/.screenrc
+HOME_CONFIGS = $(HOME)/.gitconfig \
+			   $(HOME)/.zshrc     \
+			   $(HOME)/.screenrc
+install: ssh_install $(HOME_CONFIGS)
 
 .PHONY: update
 # target: update      - Update  HOME configuration files.
-home_update:
-	@echo 
+update:
+	@echo
 	@echo " Update HOME configuration files."
-	@echo 
-	git pull 
+	@echo
+	git pull
+
+
+.PHONY: clean
+# target: clean       - Clean   HOME configuration files.
+clean:
+	@echo
+	@echo " Clean HOME configuration files."
+	@echo
+	rm -rf $(HOME_CONFIGS)
 
 .PHONY: ssh_install
 # target: ssh_install - Install SSH config and autorized files.
-ssh_install: $(HOME)/.ssh $(HOME)/.ssh/authorized_keys $(HOME)/.ssh/config
+SSH_CONFIGS = $(HOME)/.ssh/authorized_keys \
+			  $(HOME)/.ssh/config
+ssh_install: $(HOME)/.ssh \
+	$(SSH_CONFIGS)
+
+.PHONY: ssh_clean
+# target: ssh_clean   - Clean   SSH config and autorized files.
+ssh_clean:
+	@echo
+	@echo " Clean SSH configuration files."
+	@echo
+	rm -rf $(SSH_CONFIGS)
 
 $(HOME)/.ssh:
-	mkdir -p $(HOME)/.ssh
+	mkdir -p $@
 
 $(HOME)/.ssh/authorized_keys:
 	ln -s $(CURDIR)/ssh/authorized_keys $@
@@ -75,18 +102,18 @@ $(HOME)/.vim:
 	@echo
 	@echo " Install VIM files."
 	@echo
-	git clone --recursive $(VIM_REPO) $(HOME)/.vim
+	git clone --recursive $(VIM_REPO) $@
 
 
 $(HOME)/.vimrc: $(HOME)/.vim
-	cd $(HOME)/.vim && make install
+	cd $< && make install
 
 
 .PHONY: vim_update
 # target: vim_update  - Update  VIM files.
 vim_update:
-	@echo 
+	@echo
 	@echo " Update VIM files."
-	@echo 
+	@echo
 	cd $(HOME)/.vim && make update
 
