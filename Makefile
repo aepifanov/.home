@@ -1,7 +1,7 @@
 
 # Makefile for the management of configuration files.
 
-GITHUB_ANDREY = git://github.com/aepifanov
+GITHUB_ANDREY = https://github.com/aepifanov
 	HOME_REPO = $(GITHUB_ANDREY)/.home.git
 	VIM_REPO = $(GITHUB_ANDREY)/.vim.git
 
@@ -95,7 +95,6 @@ vim_clean:
 	@echo " Clean VIM files."
 	@echo
 	rm -rf $(VIM_TARGETS)
-	rm -rf .vim*
 
 
 $(HOME)/.vim:
