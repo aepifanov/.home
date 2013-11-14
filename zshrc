@@ -72,6 +72,8 @@ alias df=" df -h"
 alias cd..='cd ..'
 alias cd~='cd ~'
 
+alias ssh='~/bin/ssh'
+
 alias psa="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
 alias -g cdw='cd ~/code'
@@ -135,10 +137,11 @@ function get_git_branch()
 }
 
 
-function chpwd() 
+function chpwd()
 {
     set_prompt
 }
 
 set_prompt
 
+cd

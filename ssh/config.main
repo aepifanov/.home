@@ -1,0 +1,20 @@
+
+
+Host *
+    ForwardAgent yes
+    TCPKeepAlive no
+    ServerAliveInterval 300
+    ServerAliveCountMax 2
+    Compression yes
+    Ciphers blowfish-cbc
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null
+
+Host srv
+    User root
+    HostName 172.18.184.44
+    IdentityFile ~/.ssh/andrey.pem
+
+Host github.com
+    HostName github.com
+    IdentityFile ~/.ssh/github_id_dsa

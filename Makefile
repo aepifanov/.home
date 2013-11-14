@@ -27,8 +27,11 @@ all_clean: clean vim_clean ssh_clean
 # target: install     - Install HOME configuration files
 HOME_CONFIGS = $(HOME)/.gitconfig \
 			   $(HOME)/.zshrc     \
-			   $(HOME)/.screenrc
-install: ssh_install $(HOME_CONFIGS)
+			   $(HOME)/.screenrc  \
+			   $(HOME)/bin        \
+			   $(HOME)/bin/ssh
+install: ssh_install \
+	     $(HOME_CONFIGS)
 
 .PHONY: update
 # target: update      - Update  HOME configuration files.
@@ -50,9 +53,9 @@ clean:
 .PHONY: ssh_install
 # target: ssh_install - Install SSH config and autorized files.
 SSH_CONFIGS = $(HOME)/.ssh/authorized_keys \
-			  $(HOME)/.ssh/config
+			  $(HOME)/.ssh/config.main
 ssh_install: $(HOME)/.ssh \
-	$(SSH_CONFIGS)
+	         $(SSH_CONFIGS)
 
 .PHONY: ssh_clean
 # target: ssh_clean   - Clean   SSH config and autorized files.
@@ -62,14 +65,20 @@ ssh_clean:
 	@echo
 	rm -rf $(SSH_CONFIGS)
 
+$(HOME)/bin:
+	mkdir -p $@
+
+$(HOME)/bin/ssh:
+	ln -s $(CURDIR)/bin/ssh $@
+
 $(HOME)/.ssh:
 	mkdir -p $@
 
 $(HOME)/.ssh/authorized_keys:
 	ln -s $(CURDIR)/ssh/authorized_keys $@
 
-$(HOME)/.ssh/config:
-	ln -s $(CURDIR)/ssh/config $@
+$(HOME)/.ssh/config.main:
+	ln -s $(CURDIR)/ssh/config.main $@
 
 $(HOME)/.gitconfig:
 	ln -s $(CURDIR)/gitconfig $@
