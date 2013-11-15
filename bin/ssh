@@ -3,7 +3,7 @@
 ssh() {
 
     tmp_fifo=~/.ssh/config
-    cat ~/.ssh/config.main ~/.ssh/config.* > "$tmp_fifo" 2>/dev/null &
+    cat ~/.ssh/config.main ~/.ssh/config-* > "$tmp_fifo" 2>/dev/null &
     /usr/bin/ssh -F "$tmp_fifo" "$@"
 }
 

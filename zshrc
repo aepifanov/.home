@@ -72,7 +72,7 @@ alias df=" df -h"
 alias cd..='cd ..'
 alias cd~='cd ~'
 
-alias ssh='~/bin/ssh'
+alias ssh='~/.home/bin/ssh'
 
 alias psa="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 

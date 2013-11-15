@@ -10,11 +10,14 @@ Host *
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
 
-Host srv
-    User root
-    HostName 172.18.184.44
-    IdentityFile ~/.ssh/andrey.pem
-
 Host github.com
     HostName github.com
     IdentityFile ~/.ssh/github_id_dsa
+
+Host srv
+    HostName 172.18.184.44
+
+Host srv_root
+    User root
+    IdentityFile ~/.ssh/andrey.pem
+    HostName 172.18.184.44

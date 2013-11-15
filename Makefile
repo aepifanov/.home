@@ -27,9 +27,7 @@ all_clean: clean vim_clean ssh_clean
 # target: install     - Install HOME configuration files
 HOME_CONFIGS = $(HOME)/.gitconfig \
 			   $(HOME)/.zshrc     \
-			   $(HOME)/.screenrc  \
-			   $(HOME)/bin        \
-			   $(HOME)/bin/ssh
+			   $(HOME)/.screenrc
 install: ssh_install \
 	     $(HOME_CONFIGS)
 
@@ -64,12 +62,6 @@ ssh_clean:
 	@echo " Clean SSH configuration files."
 	@echo
 	rm -rf $(SSH_CONFIGS)
-
-$(HOME)/bin:
-	mkdir -p $@
-
-$(HOME)/bin/ssh:
-	ln -s $(CURDIR)/bin/ssh $@
 
 $(HOME)/.ssh:
 	mkdir -p $@
