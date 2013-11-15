@@ -125,3 +125,18 @@ vim_update:
 	@echo
 	cd $(HOME)/.vim && make update
 
+
+.PHONY: env_install
+# target: env_install - Install All needed packages.
+env_instal:
+	@echo
+	@echo " Install All needed packages."
+	@echo
+	sudo apt-get update
+	sudo apt-get install zsh mc dos2unix
+	sudo apt-get install git mercurial meld
+	sudo apt-get install build-essential module-assistant dkms
+	sudo apt-get install automake autoconf ctags cscope gdb valgrind
+	sudo apt-get install libevent-dev libxml2-dev libxslt1-dev
+	sudo apt-get install python-pip python-dev python-virtualenv python-setuptools ipython-notebook
+
