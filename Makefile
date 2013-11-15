@@ -133,6 +133,7 @@ env_instal:
 	@echo " Install All needed packages."
 	@echo
 	sudo apt-get update
+	sudo apt-get dist-upgrade
 	sudo apt-get install zsh mc dos2unix
 	sudo apt-get install git mercurial meld
 	sudo apt-get install build-essential module-assistant dkms
