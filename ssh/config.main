@@ -9,7 +9,7 @@ Host *
     Ciphers blowfish-cbc
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
-    IdentityFile ~/.ssh/id_ssa
+    IdentityFile ~/.ssh/id_rsa
 
 Host github.com
     HostName github.com
