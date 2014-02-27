@@ -127,8 +127,8 @@ env_install:
 	sudo apt-get update
 	sudo apt-get dist-upgrade
 	sudo apt-get install zsh mc dos2unix \
-	                     git mercurial meld \
-	                     build-essential modu le-assistant dkms \
+	                     mercurial meld \
+	                     build-essential module-assistant dkms \
 	                     automake autoconf ctags cscope gdb valgrind \
 	                     libevent-dev libxml2-dev libxslt1-dev \
 	                     python-pip python-dev python-virtualenv python-setuptools ipython-notebook
