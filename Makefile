@@ -124,9 +124,10 @@ env_install:
 	@echo
 	@echo " Install All needed packages."
 	@echo
-	sudo apt-get update
-	sudo apt-get dist-upgrade
-	sudo apt-get install zsh mc dos2unix \
+	sudo apt-get update --force-yes
+	sudo apt-get dist-upgrade --force-yes
+	sudo apt-get install --force-yes \
+	                     sh mc dos2unix \
 	                     mercurial meld \
 	                     build-essential module-assistant dkms \
 	                     automake autoconf ctags cscope gdb valgrind \
