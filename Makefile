@@ -127,7 +127,7 @@ env_install:
 	sudo apt-get --yes --force-yes update
 	sudo apt-get --yes --force-yes dist-upgrade
 	sudo apt-get --yes --force-yes install \
-	                     sh mc dos2unix \
+	                     zsh mc dos2unix \
 	                     mercurial meld \
 	                     build-essential module-assistant dkms \
 	                     automake autoconf exuberant-ctags cscope gdb valgrind \
