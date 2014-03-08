@@ -124,13 +124,13 @@ env_install:
 	@echo
 	@echo " Install All needed packages."
 	@echo
-	sudo apt-get update --force-yes
-	sudo apt-get dist-upgrade --force-yes
-	sudo apt-get install --force-yes \
+	sudo apt-get --yes --force-yes update
+	sudo apt-get --yes --force-yes dist-upgrade
+	sudo apt-get --yes --force-yes install \
 	                     sh mc dos2unix \
 	                     mercurial meld \
 	                     build-essential module-assistant dkms \
-	                     automake autoconf ctags cscope gdb valgrind \
+	                     automake autoconf exuberant-ctags cscope gdb valgrind \
 	                     libevent-dev libxml2-dev libxslt1-dev \
 	                     python-pip python-dev python-virtualenv python-setuptools ipython-notebook jq
 
