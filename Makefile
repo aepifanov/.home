@@ -132,5 +132,5 @@ env_install:
 	                     build-essential module-assistant dkms \
 	                     automake autoconf exuberant-ctags cscope gdb valgrind \
 	                     libevent-dev libxml2-dev libxslt1-dev \
-	                     python-pip python-dev python-virtualenv python-setuptools ipython-notebook jq
+	                     python-pip python-dev python_ipdb python-virtualenv python-setuptools ipython-notebook jq
 
