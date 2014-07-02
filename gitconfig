@@ -19,8 +19,8 @@
 [alias]
     st = status
     rs = reset --hard
-    lg = log --graph --decorate --pretty=oneline --abbrev-commit --all
-    l  = log --graph --all --pretty=format:'%C(yellow)%h  %C(blue bold)%d %Creset%s %C(red bold)%an %C(yellow)(%ar)'
+    lg = log --graph --decorate --pretty=oneline --abbrev-commit
+    l  = log --graph --pretty=format:'%C(yellow)%h  %C(blue bold)%d %Creset%s %C(red bold)%an %C(yellow)(%ar)'
     co = checkout
     br = branch
     df = diff

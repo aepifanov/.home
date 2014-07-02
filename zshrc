@@ -78,9 +78,11 @@ alias psa="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
 alias -g cdw='cd ~/code'
 
-alias s='screen -aOUDRR -s /bin/zsh'
+alias scrn='screen -aOUDRR '
 
 alias ipythonnotebook="ipython notebook --profile=nbserver"
+
+alias killpy="sudo kill -9 \`ps -a | grep python | head -c 6\`"
 
 ########################################################################## PROMPT
 function set_prompt()
