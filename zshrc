@@ -139,7 +139,7 @@ function get_git_branch()
 }
 
 
-function chpwd()
+function precmd()
 {
     set_prompt
 }
