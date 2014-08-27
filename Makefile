@@ -29,7 +29,7 @@ HOME_CONFIGS = $(HOME)/.gitconfig \
 			   $(HOME)/.zshrc     \
 			   $(HOME)/.screenrc
 install: ssh_install \
-	     $(HOME_CONFIGS)
+		 $(HOME_CONFIGS)
 
 .PHONY: update
 # target: update      - Update  HOME configuration files.
@@ -53,7 +53,8 @@ clean:
 SSH_CONFIGS = $(HOME)/.ssh/authorized_keys \
 			  $(HOME)/.ssh/config.main
 ssh_install: $(HOME)/.ssh \
-	         $(SSH_CONFIGS)
+			 $(HOME)/local/bin/ssh \
+			 $(SSH_CONFIGS)
 
 .PHONY: ssh_clean
 # target: ssh_clean   - Clean   SSH config and autorized files.
@@ -64,6 +65,12 @@ ssh_clean:
 	rm -rf $(SSH_CONFIGS)
 
 $(HOME)/.ssh:
+	mkdir -p $@
+
+$(HOME)/local/bin/ssh: $(HOME)/local/bin
+	ln -s $(CURDIR)/bin/ssh $@
+
+$(HOME)/local/bin:
 	mkdir -p $@
 
 $(HOME)/.ssh/authorized_keys:
@@ -127,10 +134,10 @@ env_install:
 	sudo apt-get --yes --force-yes update
 	sudo apt-get --yes --force-yes dist-upgrade
 	sudo apt-get --yes --force-yes install \
-	                     zsh mc dos2unix \
-	                     mercurial meld \
-	                     build-essential module-assistant dkms \
-	                     automake autoconf exuberant-ctags cscope gdb valgrind \
-	                     libevent-dev libxml2-dev libxslt1-dev \
-	                     python-pip python-dev python_ipdb python-virtualenv python-setuptools ipython-notebook jq
+						 zsh mc dos2unix \
+						 mercurial meld \
+						 build-essential module-assistant dkms \
+						 automake autoconf exuberant-ctags cscope gdb valgrind \
+						 libevent-dev libxml2-dev libxslt1-dev \
+						 python-pip python-dev python_ipdb python-virtualenv python-setuptools ipython-notebook jq
 

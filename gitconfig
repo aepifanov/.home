@@ -8,10 +8,14 @@
 [color]
     ui = true
 
+[push]
+    default = simple
+
 [core]
     editor = vim
     autocrlf = input
     whitespace = trailing-space,space-before-tab
+    pager = less -FXRS -x4
 
 [diff]
     tool = vimdiff

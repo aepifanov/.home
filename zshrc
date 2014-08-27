@@ -46,6 +46,7 @@ TZ=Europe/Moscow
 HISTFILE=~/.zhistory
 HISTSIZE=1024
 SAVEHIST=1024
+PATH=~/local/bin:$PATH
 
 
 ########################################################################## ALIAS
