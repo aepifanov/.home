@@ -123,9 +123,9 @@ function set_prompt()
     fi
 
     if get_git_branch; then
-        P="${P}%{$fg_bold[red]%}[$branch]%{$reset_color%}"
+        P="${P}%{$fg_bold[red]%}[$branch]"
     fi
-    PROMPT="${P}%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
+    PROMPT="${P}%{$reset_color%}%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
 
     RPROMPT="%{$fg_bold[$color]%}%T%{$reset_color%}"
 
