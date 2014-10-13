@@ -106,23 +106,26 @@ function set_prompt()
     #  The date in Mon/dd/yy format                                %W
     #  The date in yy-mm-dd format                                 %D
 
-    if [[ $HOST == "aepifanov-nb" ]]; then
-        color="cyan"
-    fi
+    P="%{$fg_bold[yellow]%}%M|"
 
-    if [[ $HOST == "srv" ]]; then
+    case "${HOST}" in
+    "aepifanov-nb")
+        color="cyan"
+        P=""
+        ;;
+    "srv")
         color="green"
-    fi
+        ;;
+    esac
 
     if [[ $USER == "root" ]]; then
         color="red"
     fi
 
     if get_git_branch; then
-        PROMPT="%{$fg_bold[yellow]%}%M|%{$fg_bold[red]%}[$branch]%{$reset_color%}%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
-    else
-        PROMPT="%{$fg_bold[yellow]%}%M|%{$reset_color%}%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
+        P="${P}%{$fg_bold[red]%}[$branch]%{$reset_color%}"
     fi
+    PROMPT="${P}%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
 
     RPROMPT="%{$fg_bold[$color]%}%T%{$reset_color%}"
 
