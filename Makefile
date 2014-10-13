@@ -124,6 +124,14 @@ vim_update:
 	@echo
 	cd $(HOME)/.vim && make update
 
+.PHONY: env_upgrade
+# target: env_upgrade - Upgrade system
+env_upgrade:
+	@echo
+	@echo " Upgrade System"
+	@echo
+	sudo apt-get --yes --force-yes update
+	sudo apt-get --yes --force-yes dist-upgrade
 
 .PHONY: env_install
 # target: env_install - Install All needed packages.
@@ -131,13 +139,10 @@ env_install:
 	@echo
 	@echo " Install All needed packages."
 	@echo
-	sudo apt-get --yes --force-yes update
-	sudo apt-get --yes --force-yes dist-upgrade
 	sudo apt-get --yes --force-yes install \
-						 zsh mc dos2unix \
-						 mercurial meld \
-						 build-essential module-assistant dkms \
-						 automake autoconf exuberant-ctags cscope gdb valgrind \
-						 libevent-dev libxml2-dev libxslt1-dev \
-						 python-pip python-dev python_ipdb python-virtualenv python-setuptools ipython-notebook jq
-
+	                     zsh mc dos2unix \
+	                     mercurial meld \
+	                     build-essential module-assistant dkms \
+	                     automake autoconf exuberant-ctags cscope gdb valgrind \
+	                     libevent-dev libxml2-dev libxslt1-dev \
+	                     python-pip python-dev python-ipdb python-virtualenv python-setuptools ipython-notebook jq
