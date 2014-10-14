@@ -85,7 +85,23 @@ alias ipythonnotebook="ipython notebook --profile=nbserver"
 
 alias killpy="sudo kill -9 \`ps -a | grep python | head -c 6\`"
 
+
 ########################################################################## PROMPT
+
+HOMEHOST="aepifanov-nb"
+SRV="srv"
+
+function get_git_branch()
+{
+    str=`git branch 2>/dev/null`
+    if (( $? == 0 )) ; then
+        branch=`awk '{if($1 == "*") {print $2}}' <<<$str`
+        return 0
+    else
+        return 1
+    fi
+}
+
 function set_prompt()
 {
 
@@ -107,11 +123,12 @@ function set_prompt()
     #  The date in yy-mm-dd format                                 %D
 
 
+    P=""
     case "${HOST}" in
-    "aepifanov-nb")
+    ${HOMEHOST})
         color="cyan"
         ;;
-    "srv")
+    ${SRV})
         color="green"
         ;;
     *)
@@ -129,20 +146,7 @@ function set_prompt()
     PROMPT="${P}%{$reset_color%}%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
 
     RPROMPT="%{$fg_bold[$color]%}%T%{$reset_color%}"
-
 }
-
-function get_git_branch()
-{
-    str=`git branch 2>/dev/null`
-    if (( $? == 0 )) ; then
-        branch=`awk '{if($1 == "*") {print $2}}' <<<$str`
-        return 0
-    else
-        return 1
-    fi
-}
-
 
 function precmd()
 {
@@ -151,4 +155,8 @@ function precmd()
 
 set_prompt
 
-cd
+if [[ ${HOST} == ${SRV} ]]; then
+    cd /mnt/
+else
+    cd
+fi
