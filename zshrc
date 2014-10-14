@@ -106,15 +106,16 @@ function set_prompt()
     #  The date in Mon/dd/yy format                                %W
     #  The date in yy-mm-dd format                                 %D
 
-    P="%{$fg_bold[yellow]%}%M|"
 
     case "${HOST}" in
     "aepifanov-nb")
         color="cyan"
-        P=""
         ;;
     "srv")
         color="green"
+        ;;
+    *)
+        P="%{$fg_bold[yellow]%}%M|"
         ;;
     esac
 
