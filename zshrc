@@ -95,11 +95,19 @@ function get_git_branch()
 {
     str=`git branch 2>/dev/null`
     if (( $? == 0 )) ; then
-        branch=`awk '{if($1 == "*") {print $2}}' <<<$str`
+        GIT_BRANCH=`awk '{if($1 == "*") {print $2}}' <<<$str`
         return 0
-    else
-        return 1
     fi
+    return 1
+}
+
+function get_venv()
+{
+    if [[ -n ${VIRTUAL_ENV} ]]; then
+        VENV=$(basename $VIRTUAL_ENV)
+        return 0
+    fi
+    return 1
 }
 
 function set_prompt()
@@ -126,34 +134,37 @@ function set_prompt()
     P=""
     case "${HOST}" in
     ${HOMEHOST})
-        color="cyan"
+        COLOR="cyan"
         ;;
     ${SRV})
-        color="green"
+        COLOR="green"
         ;;
     *)
         P="%{$fg_bold[yellow]%}%M|"
         ;;
     esac
 
-    if [[ $USER == "root" ]]; then
+    if [[ ${USER} == "root" ]]; then
         color="red"
     fi
 
-    if get_git_branch; then
-        P="${P}%{$fg_bold[red]%}[$branch]"
+    if get_venv; then
+        P="${P}%{$fg_bold[blue]%}(${VENV})"
     fi
-    PROMPT="${P}%{$reset_color%}%{$fg[$color]%}%2d%{$fg_bold[$color]%} # "
 
-    RPROMPT="%{$fg_bold[$color]%}%T%{$reset_color%}"
+    if get_git_branch; then
+        P="${P}%{$fg_bold[red]%}[${GIT_BRANCH}]"
+    fi
+
+    PROMPT="${P}%{$reset_color%}%{$fg[${COLOR}]%}%2d%{$fg_bold[${COLOR}]%} # "
+
+    RPROMPT="%{$fg_bold[${COLOR}]%}%T%{$reset_color%}"
 }
 
 function precmd()
 {
     set_prompt
 }
-
-set_prompt
 
 if [[ ${HOST} == ${SRV} ]]; then
     cd /mnt/
