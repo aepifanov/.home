@@ -53,7 +53,7 @@ clean:
 SSH_CONFIGS = $(HOME)/.ssh/authorized_keys \
 			  $(HOME)/.ssh/config.main
 ssh_install: $(HOME)/.ssh \
-			 $(HOME)/local/bin/ssh \
+			 $(HOME)/.local/bin/ssh \
 			 $(SSH_CONFIGS)
 
 .PHONY: ssh_clean
@@ -67,10 +67,10 @@ ssh_clean:
 $(HOME)/.ssh:
 	mkdir -p $@
 
-$(HOME)/local/bin/ssh: $(HOME)/local/bin
+$(HOME)/.local/bin/ssh: $(HOME)/.local/bin
 	ln -s $(CURDIR)/bin/ssh $@
 
-$(HOME)/local/bin:
+$(HOME)/.local/bin:
 	mkdir -p $@
 
 $(HOME)/.ssh/authorized_keys:
