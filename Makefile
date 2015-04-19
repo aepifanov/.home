@@ -5,69 +5,55 @@ GITHUB_ANDREY = https://github.com/aepifanov
 	HOME_REPO = $(GITHUB_ANDREY)/.home.git
 	VIM_REPO = $(GITHUB_ANDREY)/.vim.git
 
-
 .PHONY: help
 help:
-	@egrep "^# target:" [Mm]akefile
+	@egrep "^# target:" [Mm]akefile | sort
 
-
-.PHONY: all_install
-# target: all_install - Install ALL files.
-all_install: install vim_install
-
-.PHONY: all_update
-# target: all_update  - Update  ALL files.
-all_update: update vim_update
-
-.PHONY: all_clean
-# target: all_clean   - Clean   ALL files.
-all_clean: clean vim_clean ssh_clean
+#
+#
+#
 
 .PHONY: install
 # target: install     - Install HOME configuration files
 HOME_CONFIGS = $(HOME)/.gitconfig \
 			   $(HOME)/.zshrc     \
 			   $(HOME)/.screenrc
-install: ssh_install \
-		 $(HOME_CONFIGS)
+install: $(HOME_CONFIGS) \
+		 install_ssh
 
-.PHONY: update
-# target: update      - Update  HOME configuration files.
-update:
-	@echo
-	@echo " Update HOME configuration files."
-	@echo
-	git pull
+$(HOME)/.gitconfig:
+	ln -s $(CURDIR)/gitconfig $@
 
+$(HOME)/.zshrc:
+	ln -s $(CURDIR)/zshrc $@
+
+$(HOME)/.screenrc:
+	ln -s $(CURDIR)/screenrc $@
 
 .PHONY: clean
-# target: clean       - Clean   HOME configuration files.
-clean:
+# target: clean       - Clean HOME configuration files.
+clean: clean_ssh
 	@echo
 	@echo " Clean HOME configuration files."
 	@echo
 	rm -rf $(HOME_CONFIGS)
 
-.PHONY: ssh_install
-# target: ssh_install - Install SSH config and autorized files.
-SSH_CONFIGS = $(HOME)/.ssh/authorized_keys \
-			  $(HOME)/.ssh/config.main
-ssh_install: $(HOME)/.ssh \
-			 $(HOME)/.local/bin/ssh \
-			 $(SSH_CONFIGS)
+#
+# SSH
+#
 
-.PHONY: ssh_clean
-# target: ssh_clean   - Clean   SSH config and autorized files.
-ssh_clean:
-	@echo
-	@echo " Clean SSH configuration files."
-	@echo
-	rm -rf $(SSH_CONFIGS)
+.PHONY: install_ssh
+# target: install_ssh - Install SSH  config and autorized files.
+SSH_CONFIGS = $(HOME)/.ssh \
+			  $(HOME)/.ssh/authorized_keys \
+			  $(HOME)/.local/bin/ssh_ \
+			  $(HOME)/.ssh/config.main
+install_ssh: $(SSH_CONFIGS)
 
 $(HOME)/.ssh:
 	mkdir -p $@
 
-$(HOME)/.local/bin/ssh: $(HOME)/.local/bin
+$(HOME)/.local/bin/ssh_: $(HOME)/.local/bin
 	ln -s $(CURDIR)/bin/ssh $@
 
 $(HOME)/.local/bin:
@@ -79,31 +65,23 @@ $(HOME)/.ssh/authorized_keys:
 $(HOME)/.ssh/config.main:
 	ln -s $(CURDIR)/ssh/config.main $@
 
-$(HOME)/.gitconfig:
-	ln -s $(CURDIR)/gitconfig $@
-
-$(HOME)/.zshrc:
-	ln -s $(CURDIR)/zshrc $@
-
-$(HOME)/.screenrc:
-	ln -s $(CURDIR)/screenrc $@
-
-VIM_TARGETS = $(HOME)/.vimrc $(HOME)/.vim
-
-
-# target: vim_install - Install VIM files.
-.PHONY: vim_intall
-vim_install: $(VIM_TARGETS)
-
-
-.PHONY: vim_clean
-# target: vim_clean   - Clean   VIM files.
-vim_clean:
+.PHONY: clean_ssh
+# target: clean_ssh   - Clean SSH  config and autorized files.
+clean_ssh:
 	@echo
-	@echo " Clean VIM files."
+	@echo " Clean SSH configuration files."
 	@echo
-	rm -rf $(VIM_TARGETS)
+	rm -rf $(SSH_CONFIGS)
 
+#
+# VIM
+#
+
+.PHONY: install_vim
+# target: install_vim - Install VIM  files.
+VIM_TARGETS = $(HOME)/.vimrc \
+			  $(HOME)/.vim
+install_vim: $(VIM_TARGETS)
 
 $(HOME)/.vim:
 	@echo
@@ -111,31 +89,37 @@ $(HOME)/.vim:
 	@echo
 	git clone --recursive $(VIM_REPO) $@
 
-
 $(HOME)/.vimrc: $(HOME)/.vim
 	cd $< && make install
 
 
-.PHONY: vim_update
-# target: vim_update  - Update  VIM files.
-vim_update:
+.PHONY: clean_vim
+# target: clean_vim   - Clean VIM  files.
+clean_vim:
 	@echo
-	@echo " Update VIM files."
+	@echo " Clean VIM files."
 	@echo
-	cd $(HOME)/.vim && make update
+	rm -rf $(VIM_TARGETS)
 
-.PHONY: env_upgrade
-# target: env_upgrade - Upgrade system
-env_upgrade:
-	@echo
-	@echo " Upgrade System"
-	@echo
-	sudo apt-get --yes --force-yes update
-	sudo apt-get --yes --force-yes dist-upgrade
+#
+# ALL
+#
 
-.PHONY: env_install
-# target: env_install - Install All needed packages.
-env_install:
+.PHONY: install_all
+# target: install_all - Install ALL  files.
+install_all: install install_vim
+
+.PHONY: clean_all
+# target: clean_all   - Clean ALL  files.
+clean_all: clean clean_vim
+
+#
+# ENV
+#
+
+.PHONY: install_env
+# target: install_env - Install All  needed packages.
+install_env:
 	@echo
 	@echo " Install All needed packages."
 	@echo
