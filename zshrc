@@ -126,7 +126,6 @@ function set_prompt()
     #  The date in Mon/dd/yy format                                %W
     #  The date in yy-mm-dd format                                 %D
 
-
     P=''
     case "${HOST}" in
     ${HOMEHOST})
@@ -141,7 +140,7 @@ function set_prompt()
     esac
 
     if [[ ${USER} == 'root' ]]; then
-        color='red'
+        COLOR='red'
     fi
 
     if get_venv; then
