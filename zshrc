@@ -166,8 +166,3 @@ function precmd()
     set_prompt
 }
 
-if [[ ${HOST} == ${SRV} ]]; then
-    cd /mnt/
-else
-    cd
-fi
