@@ -8,4 +8,4 @@ Install
            git clone git@github.com:aepifanov/.home.git
 
     2. In .home directory to use make utility for the following configuration:
-           make 
+           make

@@ -1,4 +1,4 @@
-#!/bin/zsh -x
+#!/bin/zsh
 
 ########################################################################## COLOURS
 BLACK='0;0'
@@ -7,38 +7,20 @@ RED='1;31'
 DRED='0;31'
 GREEN='1;32'
 DGREEN='0;32'
-YELLOW="1;33"
-DYELLOW="0;33"
-BLUE="1;34"
-DBLUE="0;34"
-MAGENTA="1;35"
-DMAGENTA="0;35"
-CYAN="1;36"
-DCYAN="0;36"
-WHITE="1;37"
+YELLOW='1;33'
+DYELLOW='0;33'
+BLUE='1;34'
+DBLUE='0;34'
+MAGENTA='1;35'
+DMAGENTA='0;35'
+CYAN='1;36'
+DCYAN='0;36'
+WHITE='1;37'
 DWHITE='0;37'
 
 autoload -U colors && colors
 LS_COLORS="fi=$BLACK:di=$BLUE:ln=$CYAN:pi=$YELLOW:so=$MAGENTA:do=$MAGENTA:bd=$YELLOW:cd=$YELLOW:or=$WHITE:mi=$WHITE:ex=$GREEN:*.tar=$MAGENTA:*.tgz=$MAGENTA:*.tar.bz2=$MAGENTA:*.tar.gz=$MAGENTA:*.c=$CYAN:*.h=$CYAN:*.mk=$RED:*.m?=$RED:*.diff=$YELLOW:*.patch=$YELLOW:"
 
-########################################################################## COMPLETION
-#zstyle ':completion:*' completer _expand _complete _ignored
-#zstyle ':completion:*' group-name ''
-#zstyle ':completion:*' list-colors ''
-#zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
-#zstyle ':completion:*' max-errors 1
-#zstyle ':completion:*' menu select=long-list select=0
-#zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
-#zstyle ':completion:*' use-compctl false
-#zstyle ':completion:*' verbose true
-#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-#setopt autocd ignoreeof histignoredups histignorespace
-#setopt CORRECT
-#setopt AUTO_CD
-#autoload -Uz compinit
-#compinit
 
 ########################################################################## ENVIRONMENTS
 BLOCKSIZE=k
@@ -52,8 +34,6 @@ PATH=~/.local/bin:$PATH
 ########################################################################## ALIAS
 alias vi='vim'
 
-alias exit='sync; sync; exit'
-
 alias cp='nocorrect cp --verbose --recursive --preserve=all'
 alias mv='nocorrect mv --verbose '
 alias rm='nocorrect rm -rv'
@@ -65,31 +45,47 @@ alias df='df --human-readable'
 alias mkdir='nocorrect mkdir'
 
 alias ls=' ls --classify --color --human-readable --group-directories-first'
-alias ll=" ls -l"
-alias la=" ls -a"
-alias lla="ls -la"
-alias df=" df -h"
+alias ll=' ls -l'
+alias la=' ls -a'
+alias lla='ls -la'
+alias df=' df -h'
 
 alias cd..='cd ..'
 alias cd~='cd ~'
 
-alias ssh='~/.home/bin/ssh'
+alias psa='ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args'
+alias rsync='rsync -avzrc'
 
-alias psa="ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args"
 
-alias -g cdw='cd ~/code'
+alias scrn='screen_'
+alias ssh='ssh_'
 
-alias scrn='screen -aOUDRR '
+function screen_()
+{
+    if [[ $1 == -* ]]; then
+        screen $@
+    else
+        SESSION=${1}
+        screen -x $SESSION || screen -aOUS $SESSION
+    fi
+}
 
-alias ipythonnotebook="ipython notebook --profile=nbserver"
+function ssh_()
+{
+    MAIN_CFG=~/.ssh/config.main
+    DEV_CFGS=~/.ssh/config-*
+    CFG=~/.ssh/config
 
-alias killpy="sudo kill -9 \`ps -a | grep python | head -c 6\`"
+    [ -e $MAIN_CFG ] && cat $MAIN_CFG >  $CFG 2> /dev/null
+    [ -e $DEV_CFGS ] && cat $DEV_CFGS >> $CFG 2> /dev/null
 
+    /usr/bin/ssh "$@"
+}
 
 ########################################################################## PROMPT
 
-HOMEHOST="aepifanov-nb"
-SRV="srv"
+HOMEHOST='aepifanov-nb'
+SRV='srv'
 
 function get_git_branch()
 {
@@ -131,21 +127,21 @@ function set_prompt()
     #  The date in yy-mm-dd format                                 %D
 
 
-    P=""
+    P=''
     case "${HOST}" in
     ${HOMEHOST})
-        COLOR="cyan"
+        COLOR='cyan'
         ;;
     ${SRV})
-        COLOR="green"
+        COLOR='green'
         ;;
     *)
         P="%{$fg_bold[yellow]%}%M|"
         ;;
     esac
 
-    if [[ ${USER} == "root" ]]; then
-        color="red"
+    if [[ ${USER} == 'root' ]]; then
+        color='red'
     fi
 
     if get_venv; then

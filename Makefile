@@ -46,23 +46,16 @@ clean: clean_ssh
 # target: install_ssh - Install SSH  config and autorized files.
 SSH_CONFIGS = $(HOME)/.ssh \
 			  $(HOME)/.ssh/authorized_keys \
-			  $(HOME)/.local/bin/ssh_ \
 			  $(HOME)/.ssh/config.main
 install_ssh: $(SSH_CONFIGS)
 
 $(HOME)/.ssh:
 	mkdir -p $@
 
-$(HOME)/.local/bin/ssh_: $(HOME)/.local/bin
-	ln -s $(CURDIR)/bin/ssh $@
-
-$(HOME)/.local/bin:
-	mkdir -p $@
-
-$(HOME)/.ssh/authorized_keys:
+$(HOME)/.ssh/authorized_keys: $(HOME)/.ssh
 	ln -s $(CURDIR)/ssh/authorized_keys $@
 
-$(HOME)/.ssh/config.main:
+$(HOME)/.ssh/config.main: $(HOME)/.ssh
 	ln -s $(CURDIR)/ssh/config.main $@
 
 .PHONY: clean_ssh

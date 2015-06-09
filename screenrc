@@ -1,24 +1,25 @@
 
 caption always "%{= kr} $USER%{= kc}@%H | %{= gk} %-Lw%{= Bw}%50>%n%f* %t%{-}%+Lw%<"
+hardstatus off
 #hardstatus alwayslastline
 #hardstatus string "%{= kG}[ %{G}%H %{g}][%= %{= kw}%-Lw%{r}%n%f %t%?(%u)%?%{w}%+Lw%= %{g}]"
 
-log on
 scrollback 30000
 
 bindkey ^[[1;5D prev
 bindkey ^[[1;5C next
 
-startup_message off
-
-defutf8 on
-
-autodetach on
-
 shell /bin/zsh
 
 termcapinfo xterm* ti@:te@
 
-vbell off
 altscreen on
+autodetach on
+defflow on
+deflogin on
+defmonitor on
+defutf8 on
+log on
 
+startup_message off
+vbell off
