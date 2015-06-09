@@ -72,14 +72,20 @@ function screen_()
 
 function ssh_()
 {
-    MAIN_CFG=~/.ssh/config.main
-    DEV_CFGS=~/.ssh/config-*
-    CFG=~/.ssh/config
+    #set -x
+    cd ~/.ssh
+    MAIN_CFG="config.main"
+    CFG="config"
 
-    [ -e $MAIN_CFG ] && cat $MAIN_CFG >  $CFG 2> /dev/null
-    [ -e $DEV_CFGS ] && cat $DEV_CFGS >> $CFG 2> /dev/null
+    [ -e $MAIN_CFG ] && cat $MAIN_CFG  > $CFG
+    FILES=$(/usr/bin/find . -name "config-*" 2> /dev/null)
+    if [ ! -z "${FILES}" ]; then
+        cat config-*  >> $CFG
+    fi
 
     /usr/bin/ssh "$@"
+    cd - &> /dev/null
+    #set +x
 }
 
 ########################################################################## PROMPT
@@ -161,3 +167,5 @@ function precmd()
     set_prompt
 }
 
+# for cygwin
+cd
