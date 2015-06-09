@@ -82,9 +82,9 @@ function ssh_()
     if [ ! -z "${FILES}" ]; then
         cat config-*  >> $CFG
     fi
+    cd - &> /dev/null
 
     /usr/bin/ssh "$@"
-    cd - &> /dev/null
     #set +x
 }
 
