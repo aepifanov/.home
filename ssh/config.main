@@ -8,7 +8,6 @@ Host *
     Compression yes
     StrictHostKeyChecking no
     UserKnownHostsFile=/dev/null
-    IdentityFile ~/.ssh/id_rsa
 
 Host github.com
     HostName github.com
