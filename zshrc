@@ -36,7 +36,7 @@ alias vi='vim'
 
 alias cp='nocorrect cp --verbose --recursive --preserve=all'
 alias mv='nocorrect mv --verbose '
-alias rm='nocorrect rm -rv'
+alias rm='nocorrect rm -v'
 
 alias grep='grep --color=auto'
 
