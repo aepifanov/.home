@@ -53,7 +53,7 @@ $(HOME)/.ssh:
 	mkdir -p $@
 
 $(HOME)/.ssh/authorized_keys: $(HOME)/.ssh
-	ln -s $(CURDIR)/ssh/authorized_keys $@
+	cat $(CURDIR)/ssh/id_rsa.pub >> $@
 
 $(HOME)/.ssh/config.main: $(HOME)/.ssh
 	ln -s $(CURDIR)/ssh/config.main $@
