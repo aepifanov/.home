@@ -90,7 +90,7 @@ function ssh_()
 
 ########################################################################## PROMPT
 
-HOMEHOST='aepifanov-nb'
+HOMEHOST='aepifanov-home'
 SRV='srv'
 
 function get_git_branch()
@@ -183,15 +183,12 @@ function start_agent {
 
 # Source SSH settings, if applicable
 if [[ "${HOMEHOST}" == "${HOST}" ]]; then
-    if [ -f "${SSH_ENV}" ]; then
-        . "${SSH_ENV}" > /dev/null
-        #ps ${SSH_AGENT_PID} doesn't work under cywgin
-        ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-        start_agent;
+    (
+    flock -n 9 || exit 1
+        ps -ef | grep ssh-agent$ > /dev/null || {
+            start_agent;
         }
-    else
-        start_agent;
-    fi
+    ) 9>/var/run/ssh-agent_lockfile
 fi
 
 # for cygwin
