@@ -64,7 +64,7 @@ clean_ssh:
 	@echo
 	@echo " Clean SSH configuration files."
 	@echo
-	rm -rf $(SSH_CONFIGS)
+	rm $(HOME)/.ssh/config.main
 
 #
 # VIM
@@ -74,7 +74,8 @@ clean_ssh:
 # target: install_vim - Install VIM  files.
 VIM_TARGETS = $(HOME)/.vimrc \
 			  $(HOME)/.vim
-install_vim: $(VIM_TARGETS)
+install_vim: clean_vim \
+		$(VIM_TARGETS)
 
 $(HOME)/.vim:
 	@echo
