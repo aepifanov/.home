@@ -44,7 +44,7 @@ alias du='du --human-readable --total'
 alias df='df --human-readable'
 alias mkdir='nocorrect mkdir'
 
-alias ls=' ls --classify --color --human-readable --group-directories-first'
+alias ls=' ls -g'
 alias ll=' ls -l'
 alias la=' ls -a'
 alias lla='ls -la'
