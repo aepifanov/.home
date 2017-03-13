@@ -1,9 +1,6 @@
 
 
 Host *
-    IdentityFile ~/.ssh/id_rsa
-    PreferredAuthentications publickey
-    AddKeysToAgent yes
     ForwardAgent yes
     TCPKeepAlive no
     ServerAliveInterval 300
