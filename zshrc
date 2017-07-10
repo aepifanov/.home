@@ -29,26 +29,26 @@ HISTFILE=~/.zhistory
 HISTSIZE=1024
 SAVEHIST=1024
 PATH=~/.local/bin:$PATH
+TERM=xterm
 
 
 ########################################################################## ALIAS
 alias vi='vim'
 
 alias cp='nocorrect cp --verbose --recursive --preserve=all'
-alias mv='nocorrect mv --verbose '
+alias mv='nocorrect mv  '
 alias rm='nocorrect rm -v'
 
 alias grep='grep --color=auto'
-
-alias du='du --human-readable --total'
-alias df='df --human-readable'
 alias mkdir='nocorrect mkdir'
+alias virtm='sudo  virt-manager -c "qemu+ssh://root@172.16.162.254/system?socket=/var/run/libvirt/libvirt-sock"'
 
 alias ls=' ls -g'
-alias ll=' ls -l'
+alias ll=' ls -Gl'
 alias la=' ls -a'
 alias lla='ls -la'
 alias df=' df -h'
+alias du=' du -h --total'
 
 alias cd..='cd ..'
 alias cd~='cd ~'
@@ -90,7 +90,7 @@ function ssh_()
 
 ########################################################################## PROMPT
 
-HOMEHOST='aepifanov-home'
+HOMEHOST='aepifanov'
 SRV='srv'
 
 function get_git_branch()
@@ -184,11 +184,11 @@ function start_agent {
 # Source SSH settings, if applicable
 if [[ "${HOMEHOST}" == "${HOST}" ]]; then
     (
-    flock -n 9 || exit 1
+#    flock -n 9 || exit 1
         ps -ef | grep ssh-agent$ > /dev/null || {
             start_agent;
         }
-    ) 9>/var/run/ssh-agent_lockfile
+    ) 9>/var/tmp/ssh-agent_lockfile
 fi
 
 # for cygwin
