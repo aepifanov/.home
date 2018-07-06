@@ -35,7 +35,7 @@ TERM=xterm
 ########################################################################## ALIAS
 alias vi='vim'
 
-alias cp='nocorrect cp --verbose --recursive --preserve=all'
+alias cp='nocorrect cp -v -R'
 alias mv='nocorrect mv  '
 alias rm='nocorrect rm -v'
 
@@ -56,9 +56,7 @@ alias cd~='cd ~'
 alias psa='ps -eo user,pid,pcpu,pmem,size,vsz,rss,start,time,args'
 alias rsync='rsync -avzrc'
 
-
 alias scrn='screen_'
-alias ssh='ssh_'
 
 function screen_()
 {
@@ -70,23 +68,6 @@ function screen_()
     fi
 }
 
-function ssh_()
-{
-    #set -x
-    cd ~/.ssh
-    MAIN_CFG="config.main"
-    CFG="config"
-
-    [ -e $MAIN_CFG ] && cat $MAIN_CFG  > $CFG
-    FILES=$(/usr/bin/find . -name "config-*" 2> /dev/null)
-    if [ ! -z "${FILES}" ]; then
-        cat config-*  >> $CFG
-    fi
-    cd - &> /dev/null
-
-    /usr/bin/ssh "$@"
-    #set +x
-}
 
 ########################################################################## PROMPT
 
@@ -169,6 +150,10 @@ function precmd()
 
 ########################################################################## SSH
 
+ORIG_HOME=$HOME
+if [[ $PWD != $HOME ]]; then
+    HOME=$PWD
+fi
 
 SSH_ENV="$HOME/.ssh/environment"
 
@@ -191,5 +176,33 @@ if [[ "${HOMEHOST}" == "${HOST}" ]]; then
     ) 9>/var/tmp/ssh-agent_lockfile
 fi
 
-# for cygwin
-cd
+alias ssh='ssh_'
+
+function ssh_()
+{
+    #set -x
+    cd ~/.ssh
+    MAIN_CFG="config.main"
+    CFG="${ORIG_HOME}/.ssh/config"
+    chmod 0600 "${CFG}"
+
+    [ -e $MAIN_CFG ] && cat $MAIN_CFG  > $CFG
+    FILES=$(/usr/bin/find . -name "config-*" 2> /dev/null)
+    if [ ! -z "${FILES}" ]; then
+        cat config-*  >> $CFG
+    fi
+    cd - &> /dev/null
+
+    /usr/bin/ssh "$@"
+    #set +x
+}
+
+alias qp_shtl="sshuttle -D --dns -r 10.25.12.12 10.25.0.0/16"
+
+alias srchome="cd /Users/aepifanov/;source .zshrc;cd -"
+
+
+export GOPATH=$HOME/Code/go # don't forget to change your path correctly!
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
