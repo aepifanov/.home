@@ -16,7 +16,7 @@
     autocrlf = input
     whitespace = trailing-space,space-before-tab
     pager = less -FXRS -x4
-	excludesfile = /Users/aepifanov/.gitignore_global
+	excludesfile = /Users/aepifanov/.gitignore
 
 [diff]
     tool = vimdiff
@@ -29,9 +29,16 @@
     co = checkout
     br = branch
     df = diff
+
+    dashboards-checkout = "!f() { git fetch origin refs/meta/dashboards/main:refs/meta/dashboards/main && git checkout -B meta/dashboards/main refs/meta/dashboards/main; }; f"
+    dashboards-review = "!f() { git push origin HEAD:refs/for/refs/meta/dashboards/main; }; f"
+
+    dash-co = dashboards-checkout
+    dash-review = dashboards-review
+
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /private/var/folders/93/7grdjywn7453clwvqft11jn80000gp/T/AppTranslocation/1D3A7A53-2499-4A9F-B08C-531266C14C42/d/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
