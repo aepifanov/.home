@@ -10,10 +10,6 @@ Host *
     UserKnownHostsFile=/dev/null
     ForwardAgent yes
 
-Host github.com
-    HostName github.com
-    IdentityFile ~/.ssh/github_id_dsa
-
 Host bitbucket.org
     HostName bitbucket.org
     IdentityFile ~/.ssh/github_id_dsa
