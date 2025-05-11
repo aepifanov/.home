@@ -119,8 +119,5 @@ install_env:
 	@echo
 	sudo apt-get --yes --force-yes install \
 	                     zsh mc dos2unix \
-	                     mercurial meld \
 	                     build-essential module-assistant dkms \
-	                     automake autoconf exuberant-ctags cscope gdb valgrind \
-	                     libevent-dev libxml2-dev libxslt1-dev \
-	                     python-pip python-dev python-ipdb python-virtualenv python-setuptools ipython-notebook jq
+	                     automake autoconf exuberant-ctags cscope gdb 
