@@ -2,8 +2,11 @@
 # Makefile for the management of configuration files.
 
 GITHUB_ANDREY = https://github.com/aepifanov
-	HOME_REPO = $(GITHUB_ANDREY)/.home.git
-	VIM_REPO = $(GITHUB_ANDREY)/.vim.git
+HOME_REPO = $(GITHUB_ANDREY)/.home.git
+VIM_REPO = $(GITHUB_ANDREY)/.vim.git
+
+
+INSTALL = apt-get --yes --force-yes install 
 
 .PHONY: help
 help:
@@ -16,16 +19,13 @@ help:
 .PHONY: install
 # target: install     - Install HOME configuration files
 HOME_CONFIGS = $(HOME)/.gitconfig \
-			   $(HOME)/.zshrc     \
-			   $(HOME)/.screenrc
+	$(HOME)/.screenrc
+
 install: $(HOME_CONFIGS) \
-		 install_ssh
+	install_ssh
 
 $(HOME)/.gitconfig:
 	ln -s $(CURDIR)/gitconfig $@
-
-$(HOME)/.zshrc:
-	ln -s $(CURDIR)/zshrc $@
 
 $(HOME)/.screenrc:
 	ln -s $(CURDIR)/screenrc $@
@@ -45,8 +45,8 @@ clean: clean_ssh
 .PHONY: install_ssh
 # target: install_ssh - Install SSH  config and autorized files.
 SSH_CONFIGS = $(HOME)/.ssh \
-			  $(HOME)/.ssh/authorized_keys \
-			  $(HOME)/.ssh/config.main
+	$(HOME)/.ssh/authorized_keys \
+	$(HOME)/.ssh/config.main
 install_ssh: $(SSH_CONFIGS)
 
 $(HOME)/.ssh:
@@ -73,9 +73,9 @@ clean_ssh:
 .PHONY: install_vim
 # target: install_vim - Install VIM  files.
 VIM_TARGETS = $(HOME)/.vimrc \
-			  $(HOME)/.vim
+	$(HOME)/.vim
 install_vim: clean_vim \
-		$(VIM_TARGETS)
+	$(VIM_TARGETS)
 
 $(HOME)/.vim:
 	@echo
@@ -108,6 +108,23 @@ install_all: install install_vim
 clean_all: clean clean_vim
 
 #
+# ZSH
+#
+.PHONY: install_zsh
+install_zsh: 
+	sudo $(INSTALL) zsh
+	CHSH=yes RUNZSH=no bash -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k"
+	rm ~/.zshrc
+	ln -s $(CURDIR)/zshrc ~/.zshrc
+
+.PHONY: clean_zsh
+clean_zsh:
+	rm -rf ~/.oh-my-zsh
+	rm ~/.zshrc
+
+
+#
 # ENV
 #
 
@@ -118,6 +135,7 @@ install_env:
 	@echo " Install All needed packages."
 	@echo
 	sudo apt-get --yes --force-yes install \
-	                     zsh mc dos2unix \
-	                     build-essential module-assistant dkms \
-	                     automake autoconf exuberant-ctags cscope gdb 
+		zsh \
+		mc dos2unix \
+		build-essential module-assistant dkms \
+		automake autoconf exuberant-ctags cscope gdb jq
