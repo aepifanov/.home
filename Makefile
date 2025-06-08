@@ -12,17 +12,15 @@ INSTALL = apt-get --yes --force-yes install
 help:
 	@egrep "^# target:" [Mm]akefile | sort
 
-#
-#
-#
 
-.PHONY: install
-# target: install     - Install HOME configuration files
+#
+# Base
+#
 HOME_CONFIGS = $(HOME)/.gitconfig \
-	$(HOME)/.screenrc
-
-install: $(HOME_CONFIGS) \
-	install_ssh
+	       $(HOME)/.screenrc
+.PHONY: install_base
+# target: install_base   - Install HOME configuration files
+install_base: $(HOME_CONFIGS)
 
 $(HOME)/.gitconfig:
 	ln -s $(CURDIR)/gitconfig $@
@@ -30,20 +28,19 @@ $(HOME)/.gitconfig:
 $(HOME)/.screenrc:
 	ln -s $(CURDIR)/screenrc $@
 
-.PHONY: clean
-# target: clean       - Clean HOME configuration files.
-clean: clean_ssh
+.PHONY: clean_base
+# target: clean_base     - Clean HOME configuration files.
+clean_base:
 	@echo
 	@echo " Clean HOME configuration files."
 	@echo
-	rm -rf $(HOME_CONFIGS)
+	sudo rm -rf $(HOME_CONFIGS)
 
 #
 # SSH
 #
-
 .PHONY: install_ssh
-# target: install_ssh - Install SSH  config and autorized files.
+# target: install_ssh    - Install SSH  config and autorized files.
 SSH_CONFIGS = $(HOME)/.ssh \
 	$(HOME)/.ssh/authorized_keys \
 	$(HOME)/.ssh/config.main
@@ -59,7 +56,7 @@ $(HOME)/.ssh/config.main: $(HOME)/.ssh
 	ln -s $(CURDIR)/ssh/config.main $@
 
 .PHONY: clean_ssh
-# target: clean_ssh   - Clean SSH  config and autorized files.
+# target: clean_ssh      - Clean SSH  config and autorized files.
 clean_ssh:
 	@echo
 	@echo " Clean SSH configuration files."
@@ -69,9 +66,8 @@ clean_ssh:
 #
 # VIM
 #
-
 .PHONY: install_vim
-# target: install_vim - Install VIM  files.
+# target: install_vim    - Install VIM  files.
 VIM_TARGETS = $(HOME)/.vimrc \
 	$(HOME)/.vim
 install_vim: clean_vim \
@@ -88,49 +84,45 @@ $(HOME)/.vimrc: $(HOME)/.vim
 
 
 .PHONY: clean_vim
-# target: clean_vim   - Clean VIM  files.
+# target: clean_vim      - Clean VIM  files.
 clean_vim:
 	@echo
 	@echo " Clean VIM files."
 	@echo
 	rm -rf $(VIM_TARGETS)
 
-#
-# ALL
-#
-
-.PHONY: install_all
-# target: install_all - Install ALL  files.
-install_all: install install_vim
-
-.PHONY: clean_all
-# target: clean_all   - Clean ALL  files.
-clean_all: clean clean_vim
 
 #
 # ZSH
 #
 .PHONY: install_zsh
+# target: install_zsh    - Install ZSH and configure it.
 install_zsh: 
+	@echo
+	@echo " Install ZSH."
+	@echo
 	sudo $(INSTALL) zsh
 	CHSH=yes RUNZSH=no bash -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${HOME}/.oh-my-zsh/custom/themes/powerlevel10k"
 	rm ~/.zshrc
-	ln -s $(CURDIR)/zshrc ~/.zshrc
+	ln -s $(CURDIR)/zsh/zshrc ~/.zshrc
 
 .PHONY: clean_zsh
+# target: clean_zsh      - Clean ZSH.
 clean_zsh:
+	@echo
+	@echo " Clean VIM files."
+	@echo
 	rm -rf ~/.oh-my-zsh
 	rm ~/.zshrc
 
 
 #
-# ENV
+# Ubuntu
 #
-
-.PHONY: install_env
-# target: install_env - Install All  needed packages.
-install_env:
+.PHONY: install_ubuntu
+# target: install_ubuntu - Install All  needed packages.
+install_ubuntu: /etc/sudoers.d/$(USER)
 	@echo
 	@echo " Install All needed packages."
 	@echo
@@ -139,3 +131,31 @@ install_env:
 		mc dos2unix \
 		build-essential module-assistant dkms \
 		automake autoconf exuberant-ctags cscope gdb jq
+
+
+
+# Rule to install sudoers file
+/etc/sudoers.d/$(USER):
+	@if [ "$$(uname)" = "Linux" ]; then \
+		echo "$(USER) ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/$(USER); \
+		sudo chmod 0440 /etc/sudoers.d/$(USER); \
+	else \
+		echo "Skipping sudoers setup: not Linux."; \
+	fi
+
+.PHONY: clean_ubuntu
+# target: clean_ubuntu   - Clean Ubunutu needed packages.
+clean_ubuntu: 
+	sudo rm /etc/sudoers.d/$(USER)
+
+#
+# ALL
+#
+.PHONY: install_all
+# target: install_all    - Install ALL files.
+install_all: install_base install_vim
+
+.PHONY: clean_all
+# target: clean_all      - Clean ALL files.
+clean_all: clean_base clean_vim
+
