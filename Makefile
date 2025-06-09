@@ -6,7 +6,7 @@ HOME_REPO = $(GITHUB_ANDREY)/.home.git
 VIM_REPO = $(GITHUB_ANDREY)/.vim.git
 
 
-INSTALL = apt-get --yes --force-yes install 
+INSTALL = apt-get --yes --force-yes install
 
 .PHONY: help
 help:
@@ -72,6 +72,9 @@ VIM_TARGETS = $(HOME)/.vimrc \
 	$(HOME)/.vim
 install_vim: clean_vim \
 	$(VIM_TARGETS)
+	wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz
+	tar xzf nvim-linux-x86_64.tar.gz  --strip-components=1 -C ~/local
+	git clone https://github.com/aepifanov/nvim ~/.config/nvim
 
 $(HOME)/.vim:
 	@echo
@@ -97,7 +100,7 @@ clean_vim:
 #
 .PHONY: install_zsh
 # target: install_zsh    - Install ZSH and configure it.
-install_zsh: 
+install_zsh:
 	@echo
 	@echo " Install ZSH."
 	@echo
@@ -127,10 +130,9 @@ install_ubuntu: /etc/sudoers.d/$(USER)
 	@echo " Install All needed packages."
 	@echo
 	sudo apt-get --yes --force-yes install \
-		zsh \
-		mc dos2unix \
+		zsh mc jq tree dos2unix \
 		build-essential module-assistant dkms \
-		automake autoconf exuberant-ctags cscope gdb jq
+		automake autoconf exuberant-ctags cscope gdb
 
 
 
@@ -145,7 +147,7 @@ install_ubuntu: /etc/sudoers.d/$(USER)
 
 .PHONY: clean_ubuntu
 # target: clean_ubuntu   - Clean Ubunutu needed packages.
-clean_ubuntu: 
+clean_ubuntu:
 	sudo rm /etc/sudoers.d/$(USER)
 
 #
